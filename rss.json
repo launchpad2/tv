@@ -1,0 +1,11 @@
+{
+  "name": "Tin tức LaunchPad",
+  "code": "",
+  "feeds": [
+    { "name": "VnExpress", "url": "https://vnexpress.net/rss/tin-moi-nhat.rss" },
+    { "name": "Tuổi Trẻ", "url": "https://tuoitre.vn/rss/tin-moi-nhat.rss" },
+    { "name": "Thanh Niên", "url": "https://thanhnien.vn/rss/home.rss" },
+    { "name": "Dân trí", "url": "https://dantri.com.vn/rss/home.rss" },
+    { "name": "Google News Vietnam", "url": "https://news.google.com/rss/headlines/section/topic/NATION.vi_vn/Vietnam?hl=vi&gl=VN&ceid=VN:vi" }
+  ]
+}
