@@ -7,7 +7,7 @@ This repository is the distribution hub for LaunchPad TV (an Android TV launcher
 ## Are you a publisher? Register your source in 3 steps
 
 1. **Host your content on your own public GitHub repo** following the schemas below. Put APKs in your repo's **GitHub Releases** (do not commit APKs into the repo — GitHub blocks files over 100 MB).
-2. **Open a registration issue**: Issues → "Register a content source" and fill in the source type, display name, raw JSON link and contact.
+2. **Open a registration issue**: Issues → "Register a content source" and fill in the source type, display name and raw JSON link. Your GitHub account is recorded as the code owner.
 3. Once approved, the bot validates your JSON, issues a **6-character code** and replies right in the issue. Users just enter that code on their TV.
 
 ## Schemas
@@ -60,7 +60,11 @@ This repository is the distribution hub for LaunchPad TV (an Android TV launcher
 ## Updating your source
 
 - **Updating content** (adding apps, channels or feeds): just edit the JSON files in your repo — TVs pick the changes up automatically. Allow a few minutes for GitHub's CDN cache.
-- **Moving your repo or changing the JSON path**: open a new registration issue with the new link and mention your existing code in it — the admin re-points your code to the new link, so your users keep entering the same code. Do not delete your old repo until the switch is confirmed in the issue.
+- **Moving your repo or changing the JSON path**: open an "Update a source link" issue with your code and the new link.
+  - Opened from the **same GitHub account** that registered the code → applied automatically, no waiting.
+  - Different account → the bot asks you to commit a `launchpad-verify.txt` file (containing a nonce it gives you) into the repo your code currently points to, proving control; reply on the issue and it re-checks.
+  - Old repo already deleted → an admin reviews manually.
+  Your users keep entering the same code. Do not delete your old repo until the issue is closed as completed.
 
 ## Repository layout
 

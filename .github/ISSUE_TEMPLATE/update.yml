@@ -1,0 +1,28 @@
+name: Update a source link / Cập nhật link nguồn
+description: Point your existing code to a new JSON link — Trỏ code hiện có sang link JSON mới
+title: "[Update] "
+labels: ["update"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If you open this issue from the **same GitHub account** that registered the code, the update is applied automatically.
+        Otherwise the bot will ask you to prove control of the old repo (commit a verification file), or an admin reviews it.
+
+        *Nếu bạn mở issue bằng đúng tài khoản GitHub đã đăng ký code, cập nhật được áp dụng tự động. Nếu khác tài khoản, bot sẽ yêu cầu chứng minh quyền ghi repo cũ (commit một file xác minh), hoặc admin duyệt tay.*
+  - type: input
+    id: code
+    attributes:
+      label: Code
+      description: Your existing 6-character code — Code 6 ký tự hiện có
+      placeholder: AB2CD3
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: New raw JSON link
+      description: Link raw JSON mới
+      placeholder: https://raw.githubusercontent.com/<user>/<new-repo>/main/store.json
+    validations:
+      required: true

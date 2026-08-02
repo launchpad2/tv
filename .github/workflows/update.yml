@@ -1,0 +1,144 @@
+name: Update source link
+
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update:
+    if: >
+      contains(github.event.issue.labels.*.name, 'update') &&
+      github.event.issue.state == 'open' &&
+      (
+        (github.event_name == 'issues' && github.event.action == 'opened') ||
+        (github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'approved') ||
+        (github.event_name == 'issue_comment' && github.event.comment.user.type != 'Bot')
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify and apply
+        uses: actions/github-script@v7
+        env:
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        with:
+          script: |
+            const IDENT = { name: 'unknown', email: 'unknown@gmail.com' };
+            const tok = process.env.REGISTRY_TOKEN;
+            const priv = (path, opts = {}) => fetch('https://api.github.com/repos/onehud/launchpad/' + path, {
+              ...opts,
+              headers: { Authorization: 'Bearer ' + tok, 'X-GitHub-Api-Version': '2022-11-28', ...(opts.headers || {}) }
+            });
+            const say = (text) => github.rest.issues.createComment({
+              ...context.repo, issue_number: context.issue.number, body: text
+            });
+            const fail = async (msg) => { await say('❌ ' + msg); core.setFailed(msg); };
+
+            const body = context.payload.issue.body || '';
+            const field = (label) => {
+              const m = body.match(new RegExp('### ' + label + '\\s*\\n+(.+)'));
+              return m ? m[1].trim() : '';
+            };
+            const code = field('Code').toUpperCase();
+            const newUrl = field('New raw JSON link');
+            if (!/^[A-Z0-9]{6}$/.test(code) || !newUrl) return fail('Missing or malformed code / link.');
+
+            // Load registry entry (private repo)
+            const regRes = await priv('contents/registry/' + code + '.json');
+            if (regRes.status === 404) return fail('Unknown code: ' + code);
+            if (!regRes.ok) return fail('Registry read failed: HTTP ' + regRes.status);
+            const regItem = await regRes.json();
+            const reg = JSON.parse(Buffer.from(regItem.content, 'base64').toString('utf8'));
+            if (reg.type === 'root') return fail('This code is not updatable here.');
+            if (reg.url === newUrl) return fail('The new link is identical to the current one.');
+
+            // ===== Authorization: admin label / same GitHub account / challenge file =====
+            const author = context.payload.issue.user.login;
+            const isAdmin = context.eventName === 'issues' && context.payload.action === 'labeled';
+            let authorized = isAdmin || (reg.githubUser && author === reg.githubUser);
+
+            if (!authorized) {
+              const comments = await github.rest.issues.listComments({
+                ...context.repo, issue_number: context.issue.number, per_page: 100
+              });
+              const challenge = comments.data.find(c => c.body.includes('<!--nonce:'));
+              if (!challenge) {
+                // First contact from a non-matching account: issue a challenge
+                const nonce = Math.random().toString(16).slice(2, 10) + Math.random().toString(16).slice(2, 10);
+                await say(
+                  'This issue was not opened by the account that registered `' + code + '`, so ownership must be proven.\n\n' +
+                  '1. Commit a file named `launchpad-verify.txt` to the **root of the repo your code currently points to**, containing exactly this line:\n\n' +
+                  '```\n' + nonce + '\n```\n' +
+                  '2. Then reply anything to this issue and the bot re-checks (GitHub caches raw files — allow a few minutes).\n\n' +
+                  'If the old repo no longer exists, wait for an admin review.\n\n' +
+                  '*VI: Issue này không mở bằng tài khoản đã đăng ký code, cần chứng minh quyền sở hữu: commit file `launchpad-verify.txt` chứa đúng dòng trên vào gốc repo mà code đang trỏ tới, rồi comment bất kỳ để bot kiểm tra lại. Repo cũ không còn thì chờ admin duyệt.*\n' +
+                  '<!--nonce:' + nonce + '-->'
+                );
+                return;
+              }
+              const nonce = challenge.body.match(/<!--nonce:([0-9a-f]+)-->/)[1];
+              const m = reg.url.match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/(?:refs\/heads\/)?([^/]+)\//);
+              if (!m) return fail('The current link is not a raw.githubusercontent.com URL — an admin has to review this one.');
+              try {
+                const vRes = await fetch('https://raw.githubusercontent.com/' + m[1] + '/' + m[2] + '/' + m[3] + '/launchpad-verify.txt?v=' + Date.now());
+                if (vRes.ok && (await vRes.text()).trim() === nonce) authorized = true;
+              } catch (e) { /* treated as not verified */ }
+              if (!authorized) return fail('Verification file not found or nonce mismatch. Check the file and comment again (raw cache can take a few minutes).');
+            }
+
+            // ===== Validate the new JSON against the schema of the registered type =====
+            let json;
+            try {
+              const res = await fetch(newUrl);
+              if (!res.ok) throw new Error('HTTP ' + res.status);
+              json = await res.json();
+            } catch (e) { return fail('Could not read JSON from the new link (' + e.message + ').'); }
+            const shaOk = (s) => s == null || s === '' || (typeof s === 'string' && /^[0-9a-f]{64}$/i.test(s));
+            let err = '';
+            if (reg.type === 'store') {
+              if (typeof json.storeName !== 'string' || !Array.isArray(json.apps)) err = 'store.json must be {storeName, apps[]}';
+              else for (const a of json.apps) {
+                if (!a.packageName || !a.apkUrl || !a.version || !a.name || !a.description) { err = 'an app is missing name/packageName/description/apkUrl/version'; break; }
+                if (!shaOk(a.sha256)) { err = 'an app has a malformed sha256'; break; }
+              }
+            } else if (reg.type === 'iptv') {
+              if (typeof json.name !== 'string' || !Array.isArray(json.channels)) err = 'iptv.json must be {name, channels[]}';
+              else if (json.channels.some(c => !c.streamUrl)) err = 'a channel is missing streamUrl';
+            } else {
+              if (typeof json.name !== 'string' || !Array.isArray(json.feeds)) err = 'rss.json must be {name, feeds[]}';
+              else if (json.feeds.some(f => !f.url)) err = 'a feed is missing url';
+            }
+            if (err) return fail('New JSON does not match the schema: ' + err);
+
+            // ===== Apply: public directory entry, then private registry =====
+            const pubGet = await github.rest.repos.getContent({ ...context.repo, path: 'codes/' + code + '.json' }).catch(() => null);
+            if (!pubGet) return fail('Public code file is missing — an admin has to review this one.');
+            await github.rest.repos.createOrUpdateFileContents({
+              ...context.repo,
+              path: 'codes/' + code + '.json',
+              message: 'Update ' + code + ' (#' + context.issue.number + ')',
+              content: Buffer.from(JSON.stringify({ type: reg.type, name: reg.name, url: newUrl }, null, 2)).toString('base64'),
+              sha: pubGet.data.sha,
+              author: IDENT, committer: IDENT
+            });
+            const newReg = { ...reg, url: newUrl, prevUrl: reg.url, updatedAt: new Date().toISOString() };
+            const put = await priv('contents/registry/' + code + '.json', {
+              method: 'PUT',
+              body: JSON.stringify({
+                message: 'Update ' + code + ' (#' + context.issue.number + ')',
+                content: Buffer.from(JSON.stringify(newReg, null, 2)).toString('base64'),
+                sha: regItem.sha, author: IDENT, committer: IDENT
+              })
+            });
+            if (!put.ok) return fail('Registry write failed: HTTP ' + put.status);
+
+            await say('✅ Code **' + code + '** now points to the new link. TVs pick it up automatically (allow a few minutes of cache).\n\n*VI: Code đã trỏ sang link mới, TV tự nhận sau vài phút.*');
+            await github.rest.issues.update({
+              ...context.repo, issue_number: context.issue.number,
+              state: 'closed', state_reason: 'completed'
+            });

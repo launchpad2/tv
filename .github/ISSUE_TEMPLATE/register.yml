@@ -8,8 +8,9 @@ body:
       value: |
         Fill in the fields below. Once an admin approves, the bot replies with your code right in this issue.
         Requirements: content hosted on a **public** GitHub repo, APKs on GitHub **Releases**.
+        Your GitHub account is recorded as the owner of the code — future link updates are verified against it.
 
-        *Điền các ô dưới. Admin duyệt xong, bot sẽ trả code ngay trong issue này. Yêu cầu: nội dung ở repo GitHub public, APK ở GitHub Releases.*
+        *Điền các ô dưới. Admin duyệt xong, bot sẽ trả code ngay trong issue này. Tài khoản GitHub của bạn được ghi nhận là chủ code — các lần đổi link sau sẽ xác thực theo nó.*
   - type: dropdown
     id: type
     attributes:
@@ -35,13 +36,5 @@ body:
       label: Raw JSON link
       description: Link raw JSON
       placeholder: https://raw.githubusercontent.com/<user>/<repo>/main/store.json
-    validations:
-      required: true
-  - type: input
-    id: contact
-    attributes:
-      label: Contact
-      description: Liên hệ
-      placeholder: email or @telegram
     validations:
       required: true

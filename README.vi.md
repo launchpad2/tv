@@ -7,7 +7,7 @@ Repo này là trung tâm phân phối của LaunchPad TV (launcher cho Android T
 ## Bạn là publisher? Đăng ký nguồn trong 3 bước
 
 1. **Tự chứa nội dung trên repo GitHub public của bạn** theo đúng schema bên dưới. APK để ở **GitHub Releases** của repo bạn (không commit APK vào repo — GitHub chặn file trên 100 MB).
-2. **Mở issue đăng ký**: tab Issues → "Register a content source", điền loại nguồn + tên hiển thị + link raw JSON + liên hệ.
+2. **Mở issue đăng ký**: tab Issues → "Register a content source", điền loại nguồn + tên hiển thị + link raw JSON. Tài khoản GitHub của bạn được ghi nhận là chủ code.
 3. Admin duyệt xong, bot tự kiểm tra JSON của bạn, cấp **code 6 ký tự** và trả lời ngay trong issue. Người dùng chỉ cần nhập code đó trên TV.
 
 ## Schema
@@ -60,7 +60,11 @@ Repo này là trung tâm phân phối của LaunchPad TV (launcher cho Android T
 ## Cập nhật nguồn của bạn
 
 - **Cập nhật nội dung** (thêm app, kênh, feed): chỉ cần sửa file JSON trong repo của bạn — TV tự nhận thay đổi, chờ vài phút do CDN của GitHub có cache.
-- **Chuyển repo hoặc đổi đường dẫn file JSON**: mở issue đăng ký mới kèm link mới và ghi rõ code hiện có của bạn — admin sẽ trỏ code cũ sang link mới, người dùng vẫn nhập đúng code cũ. Đừng xoá repo cũ cho tới khi việc chuyển được xác nhận trong issue.
+- **Chuyển repo hoặc đổi đường dẫn file JSON**: mở issue "Update a source link" kèm code và link mới.
+  - Mở bằng **đúng tài khoản GitHub** đã đăng ký code → áp dụng tự động, không phải chờ.
+  - Khác tài khoản → bot yêu cầu commit file `launchpad-verify.txt` (chứa nonce bot đưa) vào repo mà code đang trỏ tới để chứng minh quyền ghi; comment lại là bot tự kiểm tra.
+  - Repo cũ đã xoá → admin duyệt tay.
+  Người dùng vẫn nhập đúng code cũ. Đừng xoá repo cũ cho tới khi issue được đóng completed.
 
 ## Cấu trúc repo này
 

@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   register:
-    if: github.event.label.name == 'approved'
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'registration')
     runs-on: ubuntu-latest
     steps:
       - name: Validate registration and generate code
@@ -26,7 +26,6 @@ jobs:
             const type = field('Source type').toLowerCase();
             const name = field('Display name');
             const url = field('Raw JSON link');
-            const contact = field('Contact');
             const fail = async (msg) => {
               await github.rest.issues.createComment({
                 ...context.repo, issue_number: context.issue.number,
@@ -77,7 +76,7 @@ jobs:
             }
             if (!code) return fail('could not generate a code, re-apply the approved label to retry.');
             const pub = { type, name, url };
-            const reg = { ...pub, owner: contact, issue: context.issue.number, createdAt: new Date().toISOString() };
+            const reg = { ...pub, githubUser: context.payload.issue.user.login, issue: context.issue.number, createdAt: new Date().toISOString() };
             core.setOutput('code', code);
             core.setOutput('pub_b64', Buffer.from(JSON.stringify(pub, null, 2)).toString('base64'));
             core.setOutput('reg_b64', Buffer.from(JSON.stringify(reg, null, 2)).toString('base64'));
