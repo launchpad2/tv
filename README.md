@@ -1,5 +1,7 @@
 # LaunchPad TV — content sources
 
+*(Bản tiếng Việt: [README.vi.md](README.vi.md))*
+
 This repository is the distribution hub for LaunchPad TV (an Android TV launcher): the code directory and publisher registration. There is no server behind it — everything is static files on GitHub.
 
 ## Are you a publisher? Register your source in 3 steps
@@ -42,6 +44,7 @@ This repository is the distribution hub for LaunchPad TV (an Android TV launcher
   ]
 }
 ```
+- `region` is a two-letter country code (ISO 3166-1 alpha-2), e.g. `US`, `VN`, `KR` — look yours up here: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 ### rss.json (news feeds)
 ```json
@@ -53,6 +56,11 @@ This repository is the distribution hub for LaunchPad TV (an Android TV launcher
   ]
 }
 ```
+
+## Updating your source
+
+- **Updating content** (adding apps, channels or feeds): just edit the JSON files in your repo — TVs pick the changes up automatically. Allow a few minutes for GitHub's CDN cache.
+- **Moving your repo or changing the JSON path**: open a new registration issue with the new link and mention your existing code in it — the admin re-points your code to the new link, so your users keep entering the same code. Do not delete your old repo until the switch is confirmed in the issue.
 
 ## Repository layout
 
