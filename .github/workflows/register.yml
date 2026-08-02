@@ -1,4 +1,4 @@
-name: Cấp code cho publisher
+name: Issue publisher code
 
 on:
   issues:
@@ -13,7 +13,7 @@ jobs:
     if: github.event.label.name == 'approved'
     runs-on: ubuntu-latest
     steps:
-      - name: Kiểm tra đăng ký + sinh code
+      - name: Validate registration and generate code
         id: prep
         uses: actions/github-script@v7
         with:
@@ -23,49 +23,51 @@ jobs:
               const m = body.match(new RegExp('### ' + label + '\\s*\\n+(.+)'));
               return m ? m[1].trim() : '';
             };
-            const type = field('Loại nguồn').toLowerCase();
-            const name = field('Tên hiển thị');
-            const url = field('Link raw JSON');
-            const contact = field('Liên hệ');
+            const type = field('Source type').toLowerCase();
+            const name = field('Display name');
+            const url = field('Raw JSON link');
+            const contact = field('Contact');
             const fail = async (msg) => {
               await github.rest.issues.createComment({
                 ...context.repo, issue_number: context.issue.number,
-                body: '❌ Chưa cấp được code: ' + msg
+                body: '❌ Could not issue a code: ' + msg + '\n\n*VI: Chưa cấp được code, xem lỗi ở trên.*'
               });
               await github.rest.issues.removeLabel({
                 ...context.repo, issue_number: context.issue.number, name: 'approved'
               }).catch(() => {});
               core.setFailed(msg);
             };
-            if (!['store', 'iptv', 'rss'].includes(type)) return fail('Loại nguồn không hợp lệ: "' + type + '"');
-            if (!name || !url) return fail('Thiếu tên hiển thị hoặc link.');
+            if (!['store', 'iptv', 'rss'].includes(type)) return fail('invalid source type: "' + type + '"');
+            if (!name || !url) return fail('missing display name or link.');
             let json;
             try {
               const res = await fetch(url);
               if (!res.ok) throw new Error('HTTP ' + res.status);
               json = await res.json();
             } catch (e) {
-              return fail('Không đọc được JSON từ link (' + e.message + ').');
+              return fail('could not read JSON from the link (' + e.message + ').');
             }
-            const isSha256 = (s) => typeof s === 'string' && /^[0-9a-f]{64}$/i.test(s);
+            const shaOk = (s) => s == null || s === '' || (typeof s === 'string' && /^[0-9a-f]{64}$/i.test(s));
             let err = '';
             if (type === 'store') {
-              if (typeof json.storeName !== 'string' || !Array.isArray(json.apps)) err = 'store.json cần {storeName, apps[]}';
+              if (typeof json.storeName !== 'string' || !Array.isArray(json.apps)) err = 'store.json must be {storeName, apps[]}';
               else for (const a of json.apps) {
-                if (!a.packageName || !a.apkUrl || !a.version || !isSha256(a.sha256)) {
-                  err = 'app "' + (a.name || a.packageName || '?') + '" thiếu packageName/apkUrl/version hoặc sha256 sai định dạng (64 hex)';
+                if (!a.packageName || !a.apkUrl || !a.version || !a.name || !a.description) {
+                  err = 'app "' + (a.name || a.packageName || '?') + '" is missing name/packageName/description/apkUrl/version';
                   break;
                 }
+                if (!shaOk(a.sha256)) { err = 'app "' + a.name + '" has a malformed sha256 (must be 64 hex chars)'; break; }
               }
             } else if (type === 'iptv') {
-              if (typeof json.name !== 'string' || !Array.isArray(json.channels)) err = 'iptv.json cần {name, channels[]}';
-              else if (json.channels.some(c => !c.streamUrl)) err = 'có kênh thiếu streamUrl';
+              if (typeof json.name !== 'string' || !Array.isArray(json.channels)) err = 'iptv.json must be {name, channels[]}';
+              else if (json.channels.some(c => !c.streamUrl)) err = 'a channel is missing streamUrl';
             } else {
-              if (typeof json.name !== 'string' || !Array.isArray(json.feeds)) err = 'rss.json cần {name, feeds[]}';
-              else if (json.feeds.some(f => !f.url)) err = 'có feed thiếu url';
+              if (typeof json.name !== 'string' || !Array.isArray(json.feeds)) err = 'rss.json must be {name, feeds[]}';
+              else if (json.feeds.some(f => !f.url)) err = 'a feed is missing url';
             }
-            if (err) return fail('JSON không đúng schema: ' + err);
-            // Sinh code 6 ký tự, bỏ O/I/0/1 dễ nhầm trên TV; check trùng trong codes/
+            if (err) return fail('JSON does not match the schema: ' + err);
+            // 6-char code, alphabet skips O/I/0/1 (easy to confuse on a TV screen);
+            // 000000 is reserved for root content and can never be generated.
             const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let code = '';
             for (let i = 0; i < 10 && !code; i++) {
@@ -73,19 +75,14 @@ jobs:
               try { await github.rest.repos.getContent({ ...context.repo, path: 'codes/' + c + '.json' }); }
               catch (e) { if (e.status === 404) code = c; else throw e; }
             }
-            if (!code) return fail('Không sinh được code, thử gắn lại label approved.');
+            if (!code) return fail('could not generate a code, re-apply the approved label to retry.');
             const pub = { type, name, url };
-            const reg = {
-              ...pub, owner: contact,
-              issueAuthor: context.payload.issue.user.login,
-              issue: context.issue.number,
-              createdAt: new Date().toISOString()
-            };
+            const reg = { ...pub, owner: contact, issue: context.issue.number, createdAt: new Date().toISOString() };
             core.setOutput('code', code);
             core.setOutput('pub_b64', Buffer.from(JSON.stringify(pub, null, 2)).toString('base64'));
             core.setOutput('reg_b64', Buffer.from(JSON.stringify(reg, null, 2)).toString('base64'));
 
-      - name: Ghi registry (repo private)
+      - name: Write private registry
         env:
           REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
           CODE: ${{ steps.prep.outputs.code }}
@@ -96,9 +93,9 @@ jobs:
             -H "Authorization: Bearer $REGISTRY_TOKEN" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/onehud/launchpad/contents/registry/${CODE}.json" \
-            -d "{\"message\":\"Đăng ký code ${CODE} (issue #${ISSUE})\",\"content\":\"${REG_B64}\",\"author\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"},\"committer\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"}}" > /dev/null
+            -d "{\"message\":\"Register ${CODE} (#${ISSUE})\",\"content\":\"${REG_B64}\",\"author\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"},\"committer\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"}}" > /dev/null
 
-      - name: Công bố code + đóng issue
+      - name: Publish code and close issue
         uses: actions/github-script@v7
         env:
           CODE: ${{ steps.prep.outputs.code }}
@@ -109,14 +106,14 @@ jobs:
             await github.rest.repos.createOrUpdateFileContents({
               ...context.repo,
               path: 'codes/' + code + '.json',
-              message: 'Cấp code ' + code + ' (issue #' + context.issue.number + ')',
+              message: 'Add ' + code + ' (#' + context.issue.number + ')',
               content: process.env.PUB_B64,
               author: { name: 'unknown', email: 'unknown@gmail.com' },
               committer: { name: 'unknown', email: 'unknown@gmail.com' }
             });
             await github.rest.issues.createComment({
               ...context.repo, issue_number: context.issue.number,
-              body: '✅ Đã cấp code: **' + code + '**\n\nNgười dùng chỉ cần nhập code này trên TV. Sau này đổi link thì mở issue mới hoặc liên hệ admin.'
+              body: '✅ Your code: **' + code + '**\n\nUsers just enter this code on their TV. If your link changes later, open a new issue.\n\n*VI: Người dùng chỉ cần nhập code này trên TV. Sau này đổi link thì mở issue mới.*'
             });
             await github.rest.issues.update({
               ...context.repo, issue_number: context.issue.number,

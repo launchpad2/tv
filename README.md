@@ -1,60 +1,60 @@
-# LaunchPad TV — nguồn nội dung
+# LaunchPad TV — content sources
 
-Repo này là hạ tầng phân phối của LaunchPad TV (Android TV launcher): danh bạ code, nội dung mặc định, và nơi publisher đăng ký nguồn của mình. Không có server nào phía sau — mọi thứ là file tĩnh trên GitHub.
+This repository is the distribution hub for LaunchPad TV (an Android TV launcher): the code directory and publisher registration. There is no server behind it — everything is static files on GitHub.
 
-## Bạn là publisher? Đăng ký nguồn trong 3 bước
+## Are you a publisher? Register your source in 3 steps
 
-1. **Tự chứa nội dung trên GitHub public của bạn** theo đúng schema dưới. APK để ở **GitHub Releases** của repo bạn (không commit APK vào repo — GitHub chặn file >100MB).
-2. **Mở issue đăng ký** tại tab Issues → "Đăng ký nguồn nội dung", điền loại nguồn + tên + link raw JSON + liên hệ.
-3. Admin duyệt → bot tự kiểm tra JSON của bạn, cấp **code 6 ký tự** và trả lời ngay trong issue. Người dùng chỉ cần nhập code đó trên TV.
+1. **Host your content on your own public GitHub repo** following the schemas below. Put APKs in your repo's **GitHub Releases** (do not commit APKs into the repo — GitHub blocks files over 100 MB).
+2. **Open a registration issue**: Issues → "Register a content source" and fill in the source type, display name, raw JSON link and contact.
+3. Once approved, the bot validates your JSON, issues a **6-character code** and replies right in the issue. Users just enter that code on their TV.
 
-## Schema
+## Schemas
 
-### store.json (kho ứng dụng)
+### store.json (app store)
 ```json
 {
-  "storeName": "Kho của A",
+  "storeName": "My store",
   "apps": [
     {
-      "name": "Ứng dụng X",
+      "name": "App X",
       "packageName": "com.example.x",
+      "description": "What the app does, in one or two sentences.",
       "iconUrl": "https://raw.githubusercontent.com/<user>/<repo>/main/icons/x.png",
       "apkUrl": "https://github.com/<user>/<repo>/releases/download/v1.0/x.apk",
       "version": "1.0",
-      "sha256": "<sha256 của file APK>",
+      "sha256": "<sha256 of the APK file>",
       "sizeBytes": 25000000
     }
   ]
 }
 ```
-- `sha256` **bắt buộc** — TV từ chối cài nếu thiếu hoặc lệch. Tính bằng: `shasum -a 256 x.apk`
-- `iconUrl`, `sizeBytes` không bắt buộc.
+- Required per app: `name`, `packageName`, `description`, `apkUrl`, `version`.
+- Optional: `iconUrl`, `sizeBytes`, `sha256`. If `sha256` is present the TV verifies the download against it (`shasum -a 256 x.apk`).
 
-### iptv.json (danh sách kênh)
+### iptv.json (channel list)
 ```json
 {
-  "name": "Kênh của A",
-  "region": "VN",
+  "name": "My channels",
+  "region": "US",
   "code": "",
   "channels": [
-    { "id": 1, "name": "Kênh 1", "logoUrl": null, "streamUrl": "https://.../index.m3u8", "group": "Giải trí" }
+    { "id": 1, "name": "Channel 1", "logoUrl": null, "streamUrl": "https://.../index.m3u8", "group": "Entertainment" }
   ]
 }
 ```
 
-### rss.json (nguồn tin)
+### rss.json (news feeds)
 ```json
 {
-  "name": "Tin của A",
+  "name": "My news",
   "code": "",
   "feeds": [
-    { "name": "Trang X", "url": "https://x.example.com/rss" }
+    { "name": "Site X", "url": "https://x.example.com/rss" }
   ]
 }
 ```
 
-## Cấu trúc repo này
+## Repository layout
 
-- `codes/{CODE}.json` — danh bạ: TV nhập code sẽ fetch `https://raw.githubusercontent.com/onehud/tv/main/codes/{CODE}.json` để lấy `{type, name, url}` rồi tải nội dung trực tiếp từ repo của publisher.
-- `store.json`, `iptv/`, `rss.json` — nội dung mặc định do LaunchPad phát hành.
-- `.github/` — form đăng ký + workflow tự cấp code (chạy khi admin gắn label `approved`).
+- `codes/{CODE}.json` — code directory: the TV resolves a code by fetching `https://raw.githubusercontent.com/onehud/tv/main/codes/{CODE}.json` to get `{type, name, url}`, then loads content directly from the publisher's repo.
+- `.github/` — registration form + the workflow that issues codes once an issue is labeled `approved`.
