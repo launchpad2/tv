@@ -1,0 +1,5 @@
+{
+  "type": "store",
+  "name": "E2E test store",
+  "url": "https://raw.githubusercontent.com/onehud/root/main/store.json"
+}
