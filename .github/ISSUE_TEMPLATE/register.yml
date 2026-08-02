@@ -1,0 +1,41 @@
+name: Đăng ký nguồn nội dung
+description: Xin cấp code cho store / IPTV / RSS của bạn
+title: "[Đăng ký] "
+labels: ["registration"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Điền đúng các ô dưới. Admin duyệt xong, bot sẽ trả code ngay trong issue này.
+        Yêu cầu: nội dung để ở repo GitHub **public**, APK để ở GitHub **Releases**, mỗi app phải có `sha256`.
+  - type: dropdown
+    id: type
+    attributes:
+      label: Loại nguồn
+      options:
+        - store
+        - iptv
+        - rss
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Tên hiển thị
+      placeholder: Kho ứng dụng của A
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link raw JSON
+      placeholder: https://raw.githubusercontent.com/<user>/<repo>/main/store.json
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Liên hệ
+      placeholder: email hoặc @telegram
+    validations:
+      required: true

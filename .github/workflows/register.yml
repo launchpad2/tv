@@ -1,0 +1,122 @@
+name: Cấp code cho publisher
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  register:
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kiểm tra đăng ký + sinh code
+        id: prep
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.issue.body || '';
+            const field = (label) => {
+              const m = body.match(new RegExp('### ' + label + '\\s*\\n+(.+)'));
+              return m ? m[1].trim() : '';
+            };
+            const type = field('Loại nguồn').toLowerCase();
+            const name = field('Tên hiển thị');
+            const url = field('Link raw JSON');
+            const contact = field('Liên hệ');
+            const fail = async (msg) => {
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: context.issue.number,
+                body: '❌ Chưa cấp được code: ' + msg
+              });
+              await github.rest.issues.removeLabel({
+                ...context.repo, issue_number: context.issue.number, name: 'approved'
+              }).catch(() => {});
+              core.setFailed(msg);
+            };
+            if (!['store', 'iptv', 'rss'].includes(type)) return fail('Loại nguồn không hợp lệ: "' + type + '"');
+            if (!name || !url) return fail('Thiếu tên hiển thị hoặc link.');
+            let json;
+            try {
+              const res = await fetch(url);
+              if (!res.ok) throw new Error('HTTP ' + res.status);
+              json = await res.json();
+            } catch (e) {
+              return fail('Không đọc được JSON từ link (' + e.message + ').');
+            }
+            const isSha256 = (s) => typeof s === 'string' && /^[0-9a-f]{64}$/i.test(s);
+            let err = '';
+            if (type === 'store') {
+              if (typeof json.storeName !== 'string' || !Array.isArray(json.apps)) err = 'store.json cần {storeName, apps[]}';
+              else for (const a of json.apps) {
+                if (!a.packageName || !a.apkUrl || !a.version || !isSha256(a.sha256)) {
+                  err = 'app "' + (a.name || a.packageName || '?') + '" thiếu packageName/apkUrl/version hoặc sha256 sai định dạng (64 hex)';
+                  break;
+                }
+              }
+            } else if (type === 'iptv') {
+              if (typeof json.name !== 'string' || !Array.isArray(json.channels)) err = 'iptv.json cần {name, channels[]}';
+              else if (json.channels.some(c => !c.streamUrl)) err = 'có kênh thiếu streamUrl';
+            } else {
+              if (typeof json.name !== 'string' || !Array.isArray(json.feeds)) err = 'rss.json cần {name, feeds[]}';
+              else if (json.feeds.some(f => !f.url)) err = 'có feed thiếu url';
+            }
+            if (err) return fail('JSON không đúng schema: ' + err);
+            // Sinh code 6 ký tự, bỏ O/I/0/1 dễ nhầm trên TV; check trùng trong codes/
+            const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 10 && !code; i++) {
+              const c = Array.from({ length: 6 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
+              try { await github.rest.repos.getContent({ ...context.repo, path: 'codes/' + c + '.json' }); }
+              catch (e) { if (e.status === 404) code = c; else throw e; }
+            }
+            if (!code) return fail('Không sinh được code, thử gắn lại label approved.');
+            const pub = { type, name, url };
+            const reg = {
+              ...pub, owner: contact,
+              issueAuthor: context.payload.issue.user.login,
+              issue: context.issue.number,
+              createdAt: new Date().toISOString()
+            };
+            core.setOutput('code', code);
+            core.setOutput('pub_b64', Buffer.from(JSON.stringify(pub, null, 2)).toString('base64'));
+            core.setOutput('reg_b64', Buffer.from(JSON.stringify(reg, null, 2)).toString('base64'));
+
+      - name: Ghi registry (repo private)
+        env:
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          CODE: ${{ steps.prep.outputs.code }}
+          REG_B64: ${{ steps.prep.outputs.reg_b64 }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          curl -sf -X PUT \
+            -H "Authorization: Bearer $REGISTRY_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/onehud/launchpad/contents/registry/${CODE}.json" \
+            -d "{\"message\":\"Đăng ký code ${CODE} (issue #${ISSUE})\",\"content\":\"${REG_B64}\"}" > /dev/null
+
+      - name: Công bố code + đóng issue
+        uses: actions/github-script@v7
+        env:
+          CODE: ${{ steps.prep.outputs.code }}
+          PUB_B64: ${{ steps.prep.outputs.pub_b64 }}
+        with:
+          script: |
+            const code = process.env.CODE;
+            await github.rest.repos.createOrUpdateFileContents({
+              ...context.repo,
+              path: 'codes/' + code + '.json',
+              message: 'Cấp code ' + code + ' (issue #' + context.issue.number + ')',
+              content: process.env.PUB_B64
+            });
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: context.issue.number,
+              body: '✅ Đã cấp code: **' + code + '**\n\nNgười dùng chỉ cần nhập code này trên TV. Sau này đổi link thì mở issue mới hoặc liên hệ admin.'
+            });
+            await github.rest.issues.update({
+              ...context.repo, issue_number: context.issue.number,
+              state: 'closed', state_reason: 'completed'
+            });
