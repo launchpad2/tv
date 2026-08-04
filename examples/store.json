@@ -1,0 +1,18 @@
+{
+  "apps": [
+    {
+      "name": "YouTube",
+      "packageName": "com.google.android.youtube.tv",
+      "description": "Xem video YouTube trên TV",
+      "icon": "https://raw.githubusercontent.com/nicehash/NiceHashQuickMiner/main/nhqm_smiley.png",
+      "url": "https://youtube.com"
+    },
+    {
+      "name": "VLC Player",
+      "packageName": "org.videolan.vlc",
+      "description": "Phát video đa định dạng",
+      "icon": "https://upload.wikimedia.org/wikipedia/commons/6/66/VLC_icon.svg",
+      "url": "https://vlc.org"
+    }
+  ]
+}

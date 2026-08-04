@@ -1,0 +1,17 @@
+{
+  "name": "Tin tức Việt Nam",
+  "feeds": [
+    {
+      "name": "VnExpress",
+      "url": "https://vnexpress.net/rss/so-hoa.rss"
+    },
+    {
+      "name": "Tuổi Trẻ",
+      "url": "https://tuoitre.vn/rss/cong-nghe.rss"
+    },
+    {
+      "name": "Thanh Niên",
+      "url": "https://thanhnien.vn/rss/xa-hoi.rss"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF:-1 tvg-name="VTV1" tvg-logo="https://upload.wikimedia.org/wikipedia/vi/thumb/1/12/VTV1_logo_2013.svg/1200px-VTV1_logo_2013.svg.png",VTV1
+http://iptv.vtv.vn/live/vtv1hd.stream/playlist.m3u8
+#EXTINF:-1 tvg-name="VTV3" tvg-logo="https://upload.wikimedia.org/wikipedia/vi/thumb/0/05/VTV3_logo_2013.svg/1200px-VTV3_logo_2013.svg.png",VTV3
+http://iptv.vtv.vn/live/vtv3hd.stream/playlist.m3u8
+#EXTINF:-1 tvg-name="HTV7" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/HTV7_logo_2013.svg/1200px-HTV7_logo_2013.svg.png",HTV7
+http://iptv.htv.com.vn/live/htv7hd.stream/playlist.m3u8

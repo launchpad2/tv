@@ -1,110 +1,118 @@
-# LaunchPad TV — content sources
+# LaunchPad TV — Hướng dẫn tạo nội dung
 
-*(Bản tiếng Việt: [README.vi.md](README.vi.md))*
+> Repository này chứa file mẫu để sử dụng với [LaunchPad TV](https://tv.launchpad2.app).
 
-This repository is the publisher hub for LaunchPad TV (an Android TV launcher): the code directory and publisher registration. There is no server behind it — everything is static files on GitHub.
+## Cách sử dụng
 
-How it works in one sentence: you host your content (a JSON file, plus APKs if you run an app store) in your own public GitHub repo, you register it here, and users type a 6-character code on their TV to load it.
+1. **Tạo tài khoản** tại [tv.launchpad2.app](https://tv.launchpad2.app)
+2. **Tạo code** từ Dashboard, chọn loại (Store / IPTV / RSS)
+3. **Tạo file nội dung** theo mẫu bên dưới
+4. **Lấy link Raw** từ GitHub và paste vào form
 
-## Key facts
+## File mẫu
 
-| | |
-|---|---|
-| Code format | 6 characters, A–Z and 2–9 (no O/I/0/1 — they look alike on screen) |
-| Where codes resolve | `https://raw.githubusercontent.com/launchpad2/tv/main/codes/{CODE}.json` |
-| Content updates reach TVs | automatically, ~5 minutes (GitHub CDN cache) |
-| Max APK size | 2 GB per release asset |
-| APK hosting | GitHub Releases (publisher) or R2 (default content) — never commit APKs into the repo |
-| Required app fields | `name`, `packageName`, `description`, `apkUrl`, `version` |
-| Optional app fields | `iconUrl`, `sizeBytes`, `sha256` |
-| Registration | free, via a GitHub issue |
-| Link updates | open a new issue; admin applies via the admin panel |
+Xem thư mục `examples/`:
 
-## Are you a publisher? Register your source in 3 steps
+| File | Mô tả | Loại code |
+|------|-------|-----------|
+| [`store.json`](examples/store.json) | Danh sách ứng dụng | `store` |
+| [`rss.json`](examples/rss.json) |Nguồn tin tức RSS | `rss` |
+| [`channels.m3u`](examples/channels.m3u) | Kênh IPTV | `iptv` |
 
-1. **Host your content in your own public GitHub repo**, following the schemas below. If you publish apps, put the APK files in your repo's **GitHub Releases** (step-by-step guide below). Never commit an APK into the repo itself — GitHub blocks files over 100 MB.
-2. **Open a registration issue**: go to this repo's Issues tab → "Register a content source" and fill in the source type, a display name and the raw JSON link. Your GitHub account is recorded as the code owner.
-3. Once approved, the bot validates your JSON, issues a **6-character code** and replies right in the issue. Users just enter that code on their TV. Done.
+## Cách tạo link Raw từ GitHub
 
-## How to upload an APK with GitHub Releases
+### Bước 1: Tạo tài khoản GitHub
 
-Never used GitHub Releases? Follow this once and you'll have it. Starting point: you have an `.apk` file on your computer and a public GitHub repo.
+Vào [github.com/signup](https://github.com/signup) để đăng ký miễn phí.
 
-1. Open your repo page on github.com.
-2. In the right sidebar, click **Releases**. (If you don't see it, add `/releases` to the end of your repo URL.)
-3. Click **Create a new release** (or **Draft a new release**).
-4. Click **Choose a tag**, type a version tag like `v1.0`, then click **Create new tag on publish**. A tag is just a version label — any short name works.
-5. Give the release a title, e.g. `Version 1.0`.
-6. Find the box that says **Attach binaries by dropping them here or selecting them** and drag & drop your `.apk` file into it. Wait for the upload to finish. Each file can be up to **2 GB**.
-7. Click **Publish release**.
-8. On the release page, right-click your `.apk` file and choose **Copy link address**. That's your download link — paste it into `apkUrl` in your `store.json`. It looks like `https://github.com/<user>/<repo>/releases/download/v1.0/x.apk`.
+### Bước 2: Tạo repo mới
 
-**Releasing a new version later?** Repeat these steps with a new tag (e.g. `v1.1`), then update `apkUrl` and `version` in your `store.json`. Old releases can stay — they don't hurt anything.
+1. Nhấn nút **+** góc trên phải → **New repository**
+2. Đặt tên repo (ví dụ: `my-tv-content`)
+3. Chọn **Public**
+4. Nhấn **Create repository**
 
-**Optional but recommended — sha256 checksum.** If you add a `sha256` field, the TV verifies the download before installing. Get the value by running one command in a terminal, in the folder containing the APK:
+### Bước 3: Tạo file nội dung
 
-- macOS / Linux: `shasum -a 256 app.apk`
-- Windows: `certutil -hashfile app.apk SHA256`
+1. Trong repo mới, nhấn **Add file** → **Create new file**
+2. Đặt tên file (ví dụ: `store.json`, `rss.json`, hoặc `channels.m3u`)
+3. Copy nội dung từ thư mục `examples/` vào
+4. Nhấn **Commit changes**
 
-Copy the long string it prints into the `sha256` field. If you skip this, everything still works — the TV just doesn't verify the file.
+### Bước 4: Lấy link Raw
 
-## Schemas
+1. Mở file vừa tạo
+2. Nhấn nút **Raw** góc trên phải
+3. Copy link URL (bắt đầu bằng `https://raw.githubusercontent.com/...`)
 
-Your repo needs one JSON file matching your source type. Copy a template below and replace the values.
+### Bước 5: Dán link vào LaunchPad TV
 
-### store.json (app store)
+1. Vào Dashboard → nhấn **Tạo**
+2. Chọn loại code
+3. Paste link Raw vào ô **Link**
+4. Nhấn **Lưu**
+
+## Cấu trúc file
+
+### Store (`store.json`)
+
 ```json
 {
-  "storeName": "My store",
   "apps": [
     {
-      "name": "App X",
-      "packageName": "com.example.x",
-      "description": "What the app does, in one or two sentences.",
-      "iconUrl": "https://raw.githubusercontent.com/<user>/<repo>/main/icons/x.png",
-      "apkUrl": "https://github.com/<user>/<repo>/releases/download/v1.0/x.apk",
-      "version": "1.0",
-      "sha256": "<sha256 of the APK file>",
-      "sizeBytes": 25000000
+      "name": "Tên app",
+      "packageName": "com.example.app",
+      "description": "Mô tả app",
+      "icon": "https://link-den-icon.png",
+      "url": "https://link-tai-ve-hoac-trang-web"
     }
   ]
 }
 ```
-- Required per app: `name`, `packageName`, `description`, `apkUrl`, `version`.
-- Optional: `iconUrl`, `sizeBytes`, `sha256`. If `sha256` is present the TV verifies the download against it (see the checksum step above).
 
-### iptv.json (channel list)
+**Trường bắt buộc:**
+- `name` — Tên hiển thị trên TV
+- `packageName` — Package name (Android)
+- `url` — Link tải hoặc trang web
+
+**Trường tuỳ chọn:**
+- `description` — Mô tả
+- `icon` — Link icon (PNG/JPG)
+
+### RSS (`rss.json`)
+
 ```json
 {
-  "name": "My channels",
-  "region": "US",
-  "code": "",
-  "channels": [
-    { "id": 1, "name": "Channel 1", "logoUrl": null, "streamUrl": "https://.../index.m3u8", "group": "Entertainment" }
-  ]
-}
-```
-- `region` is a two-letter country code (ISO 3166-1 alpha-2), e.g. `US`, `VN`, `KR` — look yours up here: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-### rss.json (news feeds)
-```json
-{
-  "name": "My news",
-  "code": "",
+  "name": "Tên nguồn tin",
   "feeds": [
-    { "name": "Site X", "url": "https://x.example.com/rss" }
+    {
+      "name": "Tên chuyên mục",
+      "url": "https://vnexpress.net/rss/so-hoa.rss"
+    }
   ]
 }
 ```
 
-## Updating your source
+### IPTV (`channels.m3u`)
 
-- **Updating content** (adding apps, channels or feeds): just edit the JSON files in your repo — TVs pick the changes up automatically. Allow ~5 minutes for GitHub's CDN cache. No issue needed.
-- **Moving your repo or changing the JSON path**: open a new registration issue with the new link, and mention the old code in the body so an admin can retire it. Link changes are applied through the admin panel, not automatically.
+```m3u
+#EXTM3U
+#EXTINF:-1 tvg-name="Tên kênh" tvg-logo="https://link-icon.png",Tên kênh hiển thị
+http://link-stream.m3u8
+```
 
-  Your users keep entering the same code either way. Do not delete your old repo until the admin confirms the new code is live.
+## Câu hỏi thường gặp
 
-## Repository layout
+**Q: Cập nhật nội dung mất bao lâu?**
+A: Khoảng 5 phút (do cache CDN của GitHub).
 
-- `codes/{CODE}.json` — code directory: the TV resolves a code by fetching `https://raw.githubusercontent.com/launchpad2/tv/main/codes/{CODE}.json` to get `{type, name, url}`, then loads content directly from the publisher's repo (or from LaunchPad's R2 bucket for default content).
-- `.github/` — registration form + the workflow that issues codes once an issue is labeled `approved`.
+**Q: Có thể dùng Google Drive thay GitHub không?**
+A: Không. Phải dùng link `raw.githubusercontent.com`.
+
+**Q: File JSON cần đúng format không?**
+A: Có. JSON phải hợp lệ và đúng cấu trúc như ví dụ.
+
+## Hỗ trợ
+
+- Website: [tv.launchpad2.app](https://tv.launchpad2.app)
+- Email: xtieume@gmail.com
