@@ -1,7 +1,7 @@
 {
   "type": "root",
   "name": "LaunchPad",
-  "store": "https://raw.githubusercontent.com/onehud/root/main/store.json",
-  "iptv": "https://raw.githubusercontent.com/onehud/root/main/iptv/US.json",
-  "rss": "https://raw.githubusercontent.com/onehud/root/main/rss.json"
+  "store": "https://pub-318400d739304eb1b03989052b18d5b6.r2.dev/store.json",
+  "iptv": "https://pub-318400d739304eb1b03989052b18d5b6.r2.dev/iptv/US.json",
+  "rss": "https://pub-318400d739304eb1b03989052b18d5b6.r2.dev/rss.json"
 }
