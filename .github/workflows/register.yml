@@ -76,23 +76,8 @@ jobs:
             }
             if (!code) return fail('could not generate a code, re-apply the approved label to retry.');
             const pub = { type, name, url };
-            const reg = { ...pub, githubUser: context.payload.issue.user.login, issue: context.issue.number, createdAt: new Date().toISOString() };
             core.setOutput('code', code);
             core.setOutput('pub_b64', Buffer.from(JSON.stringify(pub, null, 2)).toString('base64'));
-            core.setOutput('reg_b64', Buffer.from(JSON.stringify(reg, null, 2)).toString('base64'));
-
-      - name: Write private registry
-        env:
-          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
-          CODE: ${{ steps.prep.outputs.code }}
-          REG_B64: ${{ steps.prep.outputs.reg_b64 }}
-          ISSUE: ${{ github.event.issue.number }}
-        run: |
-          curl -sf -X PUT \
-            -H "Authorization: Bearer $REGISTRY_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/onehud/launchpad/contents/registry/${CODE}.json" \
-            -d "{\"message\":\"Register ${CODE} (#${ISSUE})\",\"content\":\"${REG_B64}\",\"author\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"},\"committer\":{\"name\":\"unknown\",\"email\":\"unknown@gmail.com\"}}" > /dev/null
 
       - name: Publish code and close issue
         uses: actions/github-script@v7

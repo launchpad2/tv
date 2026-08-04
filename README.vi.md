@@ -60,13 +60,11 @@ Repo này là trung tâm phân phối của LaunchPad TV (launcher cho Android T
 ## Cập nhật nguồn của bạn
 
 - **Cập nhật nội dung** (thêm app, kênh, feed): chỉ cần sửa file JSON trong repo của bạn — TV tự nhận thay đổi, chờ vài phút do CDN của GitHub có cache.
-- **Chuyển repo hoặc đổi đường dẫn file JSON**: mở issue "Update a source link" kèm code và link mới.
-  - Mở bằng **đúng tài khoản GitHub** đã đăng ký code → áp dụng tự động, không phải chờ.
-  - Khác tài khoản → bot yêu cầu commit file `launchpad-verify.txt` (chứa nonce bot đưa) vào repo mà code đang trỏ tới để chứng minh quyền ghi; comment lại là bot tự kiểm tra.
-  - Repo cũ đã xoá → admin duyệt tay.
-  Người dùng vẫn nhập đúng code cũ. Đừng xoá repo cũ cho tới khi issue được đóng completed.
+- **Chuyển repo hoặc đổi đường dẫn file JSON**: mở issue đăng ký mới với link mới, ghi chú code cũ trong body để admin retire. Đổi link được áp dụng qua admin panel, không tự động.
+
+  Người dùng vẫn nhập đúng code cũ. Đừng xoá repo cũ cho tới khi admin xác nhận code mới đã live.
 
 ## Cấu trúc repo này
 
-- `codes/{CODE}.json` — danh bạ: TV nhập code sẽ fetch `https://raw.githubusercontent.com/onehud/tv/main/codes/{CODE}.json` để lấy `{type, name, url}` rồi tải nội dung trực tiếp từ repo của publisher.
+- `codes/{CODE}.json` — danh bạ: TV nhập code sẽ fetch `https://raw.githubusercontent.com/launchpad2/tv/main/codes/{CODE}.json` để lấy `{type, name, url}` rồi tải nội dung trực tiếp từ repo của publisher (hoặc từ R2 bucket của LaunchPad với nội dung mặc định).
 - `.github/` — form đăng ký + workflow tự cấp code khi issue được gắn label `approved`.
