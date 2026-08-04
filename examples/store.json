@@ -1,0 +1,39 @@
+{
+  "apps": [
+    {
+      "name": "Monet Launcher",
+      "packageName": "com.klevico.monet",
+      "description": "Launcher cho Android TV với màu sắc động theo wallpaper",
+      "icon": "https://raw.githubusercontent.com/Klevico/Monet-Launcher/main/screenshots/icon.png",
+      "url": "https://github.com/Klevico/Monet-Launcher/releases/download/v1.0.67/monet-1.0.67.apk"
+    },
+    {
+      "name": "Jellyfin for Android TV",
+      "packageName": "org.jellyfin.androidtv",
+      "description": "Trình phát media cho Jellyfin trên Android TV",
+      "icon": "https://raw.githubusercontent.com/jellyfin/jellyfin-androidtv/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "url": "https://github.com/jellyfin/jellyfin-androidtv/releases/download/v0.19.9/jellyfin-androidtv-v0.19.9-release.apk"
+    },
+    {
+      "name": "SmartTwitchTV",
+      "packageName": "com.fgl27.twitch",
+      "description": "Trình xem Twitch trên Android TV, hỗ trợ nhiều chế độ xem",
+      "icon": "https://raw.githubusercontent.com/fgl27/SmartTwitchTV/master/apk/Changelog.md",
+      "url": "https://github.com/fgl27/SmartTwitchTV/releases/download/379/SmartTV_twitch_3_0_379.apk"
+    },
+    {
+      "name": "FLauncher",
+      "packageName": "me.efesser.flauncher",
+      "description": "Launcher thay thế miễn phí, mã nguồn mở cho Android TV",
+      "icon": "https://raw.githubusercontent.com/osrosal/flauncher/main/fastlane/metadata/android/en-US/icon.png",
+      "url": "https://github.com/osrosal/flauncher/releases/download/v2025.07.001/flauncher-arm64-v8a-release.apk"
+    },
+    {
+      "name": "MyTV Android",
+      "packageName": "com.mytv.android",
+      "description": "Trình phát IPTV cho Android TV với giao diện Material 3",
+      "icon": "https://raw.githubusercontent.com/mytv-android/mytv-android/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "url": "https://github.com/mytv-android/mytv-android/releases/download/V2.1.0.212/mytv-android-tv-2.1.0.212-arm64-v8a-sdk23-original.apk"
+    }
+  ]
+}
