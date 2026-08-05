@@ -1,0 +1,25 @@
+{
+  "storeName": "My Store",
+  "apps": [
+    {
+      "name": "APKPure",
+      "packageName": "com.apkpure.aegon",
+      "description": "Alternative app store: discover and install Android apps and games, including titles not available in your region.",
+      "iconUrl": null,
+      "apkUrl": "https://github.com/launchpad2/tv/releases/download/apk-v1/apkpure-3.20.7609.apk",
+      "version": "3.20.7609",
+      "sha256": "3e2d45aaafc2e894c922f6964848ef8410bdfac93470ed9ebc672b6d22218395",
+      "sizeBytes": 26434115
+    },
+    {
+      "name": "Aptoide",
+      "packageName": "cm.aptoide.pt",
+      "description": "Independent Android app store with its own catalog of apps and games.",
+      "iconUrl": null,
+      "apkUrl": "https://github.com/launchpad2/tv/releases/download/apk-v1/aptoide-10.0.0.apk",
+      "version": "10.0.0",
+      "sha256": "cd3a042bb2135040024cdd4e7b0dfd5f2db950e6fc111f529b5e5887fbf7fc47",
+      "sizeBytes": 13074189
+    }
+  ]
+}

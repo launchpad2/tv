@@ -1,0 +1,49 @@
+{
+  "name": "My News",
+  "feeds": [
+    {
+      "name": "Google News",
+      "url": "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
+    },
+    {
+      "name": "BBC News",
+      "url": "https://feeds.bbci.co.uk/news/rss.xml"
+    },
+    {
+      "name": "CNN",
+      "url": "http://rss.cnn.com/rss/edition.rss"
+    },
+    {
+      "name": "The Guardian",
+      "url": "https://www.theguardian.com/world/rss"
+    },
+    {
+      "name": "The New York Times",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+    },
+    {
+      "name": "NPR",
+      "url": "https://feeds.npr.org/1001/rss.xml"
+    },
+    {
+      "name": "Al Jazeera",
+      "url": "https://www.aljazeera.com/xml/rss/all.xml"
+    },
+    {
+      "name": "BBC Technology",
+      "url": "https://feeds.bbci.co.uk/news/technology/rss.xml"
+    },
+    {
+      "name": "The Verge",
+      "url": "https://www.theverge.com/rss/index.xml"
+    },
+    {
+      "name": "Ars Technica",
+      "url": "https://feeds.arstechnica.com/arstechnica/index"
+    },
+    {
+      "name": "BBC Sport",
+      "url": "https://feeds.bbci.co.uk/sport/rss.xml"
+    }
+  ]
+}
