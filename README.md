@@ -55,7 +55,9 @@ A store code points at a JSON manifest listing the apps your TV can install.
       "apkUrl": "https://github.com/launchpad2/tv/releases/download/apk-v1/apkpure-3.20.7609.apk",
       "version": "3.20.7609",
       "sha256": "3e2d45aaafc2e894c922f6964848ef8410bdfac93470ed9ebc672b6d22218395",
-      "sizeBytes": 26434115
+      "sizeBytes": 26434115,
+      "minSdk": 19,
+      "versionCode": 3207697
     }
   ]
 }
@@ -71,7 +73,61 @@ A store code points at a JSON manifest listing the apps your TV can install.
 | `apps[].sha256` | yes | SHA-256 of the APK — the TV verifies the download against it |
 | `apps[].sizeBytes` | no | File size in bytes, used for the progress bar |
 | `apps[].iconUrl` | no | PNG/JPG link, or `null` for a generated placeholder |
+| `apps[].bannerUrl` | no | Wide PNG/JPG (16:9) shown in the detail panel |
 | `apps[].description` | no | Short description |
+| `apps[].minSdk` | no | Minimum Android API level the APK needs. A TV below it never sees the app |
+| `apps[].versionCode` | no | Android `versionCode`, used to pick the newest build of a package |
+
+Read `minSdk` and `versionCode` straight off the APK instead of typing them by hand:
+
+```bash
+aapt dump badging my-app.apk | grep -E "^package:|^sdkVersion"
+```
+
+Leaving both out keeps the old behaviour: the app is offered to every TV and never grouped
+with another build.
+
+### Several builds of one app
+
+An old TV and a new one often need different builds of the same app. List each build as its own
+entry with the same `packageName`, and the TV sorts it out:
+
+1. Drops every build whose `minSdk` is above its own API level — so nobody downloads 90 MB just
+   to be told "App not installed".
+2. Shows **one card per package**: the surviving build with the highest `versionCode`.
+3. Lists the other surviving builds under **Other versions** in the detail panel, so a user can
+   still install an older build when the newest one misbehaves on their set.
+
+If no build survives step 1 the app disappears from the store entirely.
+
+```json
+{
+  "storeName": "My Store",
+  "apps": [
+    {
+      "name": "LeanKeyboard",
+      "packageName": "org.liskovsoft.androidtv.rukeyboard",
+      "apkUrl": "https://example.com/apk/leankeyboard-6.1.31.apk",
+      "version": "6.1.31",
+      "sha256": "…",
+      "minSdk": 14,
+      "versionCode": 201
+    },
+    {
+      "name": "LeanKeyboard",
+      "packageName": "org.liskovsoft.androidtv.rukeyboard",
+      "apkUrl": "https://example.com/apk/leankeyboard-6.1.28.apk",
+      "version": "6.1.28",
+      "sha256": "…",
+      "minSdk": 14,
+      "versionCode": 198
+    }
+  ]
+}
+```
+
+Two apps you want listed side by side must keep **different** `packageName` values — that is why
+`cm.aptoide.pt` and `cm.aptoidetv.pt` both show up as their own cards.
 
 Get the checksum and size of your APK with:
 

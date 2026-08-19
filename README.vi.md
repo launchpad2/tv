@@ -55,7 +55,9 @@ Code loại store trỏ tới một file JSON liệt kê các app mà TV có th�
       "apkUrl": "https://github.com/launchpad2/tv/releases/download/apk-v1/apkpure-3.20.7609.apk",
       "version": "3.20.7609",
       "sha256": "3e2d45aaafc2e894c922f6964848ef8410bdfac93470ed9ebc672b6d22218395",
-      "sizeBytes": 26434115
+      "sizeBytes": 26434115,
+      "minSdk": 19,
+      "versionCode": 3207697
     }
   ]
 }
@@ -71,7 +73,60 @@ Code loại store trỏ tới một file JSON liệt kê các app mà TV có th�
 | `apps[].sha256` | có | SHA-256 của file APK — TV kiểm tra file tải về theo giá trị này |
 | `apps[].sizeBytes` | không | Kích thước file theo byte, dùng cho thanh tiến trình |
 | `apps[].iconUrl` | không | Link PNG/JPG, hoặc `null` để dùng icon tự sinh |
+| `apps[].bannerUrl` | không | Ảnh ngang (16:9) hiện trong khung chi tiết |
 | `apps[].description` | không | Mô tả ngắn |
+| `apps[].minSdk` | không | API level Android tối thiểu của gói. Máy thấp hơn sẽ KHÔNG thấy app |
+| `apps[].versionCode` | không | `versionCode` của gói, dùng để chọn bản mới nhất khi một gói có nhiều bản |
+
+Đọc `minSdk` và `versionCode` thẳng từ file APK, đừng gõ tay:
+
+```bash
+aapt dump badging my-app.apk | grep -E "^package:|^sdkVersion"
+```
+
+Bỏ trống cả hai thì giữ nguyên hành vi cũ: app hiện trên mọi TV và không bị gom với bản nào khác.
+
+### Một app có nhiều bản
+
+TV đời cũ và TV đời mới thường cần hai bản khác nhau của cùng một app. Cứ khai mỗi bản thành một
+entry riêng với cùng `packageName`, TV sẽ tự xử lý:
+
+1. Bỏ mọi bản có `minSdk` cao hơn API của máy — không ai phải tải 90 MB rồi mới nhận thông báo
+   "App not installed".
+2. Hiện **một thẻ cho một gói**: bản còn lại có `versionCode` cao nhất.
+3. Các bản còn lại nằm ở mục **Phiên bản khác** trong khung chi tiết, để người dùng vẫn cài được
+   bản cũ khi bản mới lỗi trên máy của họ.
+
+Nếu không bản nào qua được bước 1 thì app biến mất khỏi cửa hàng.
+
+```json
+{
+  "storeName": "My Store",
+  "apps": [
+    {
+      "name": "LeanKeyboard",
+      "packageName": "org.liskovsoft.androidtv.rukeyboard",
+      "apkUrl": "https://example.com/apk/leankeyboard-6.1.31.apk",
+      "version": "6.1.31",
+      "sha256": "…",
+      "minSdk": 14,
+      "versionCode": 201
+    },
+    {
+      "name": "LeanKeyboard",
+      "packageName": "org.liskovsoft.androidtv.rukeyboard",
+      "apkUrl": "https://example.com/apk/leankeyboard-6.1.28.apk",
+      "version": "6.1.28",
+      "sha256": "…",
+      "minSdk": 14,
+      "versionCode": 198
+    }
+  ]
+}
+```
+
+Hai app muốn hiện song song thì `packageName` phải KHÁC nhau — đó là lý do `cm.aptoide.pt` và
+`cm.aptoidetv.pt` mỗi cái một thẻ.
 
 Lấy checksum và kích thước file APK:
 
