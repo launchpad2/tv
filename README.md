@@ -8,8 +8,8 @@
 <p align="center"><strong>Turn on the TV and everything you care about is already there.</strong></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.0-6c63ff?style=flat-square" alt="LaunchPad TV version">
-  <img src="https://img.shields.io/badge/MiTV_Installer-1.2.1-f37021?style=flat-square" alt="MiTV Installer version">
+  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.0_(120)-6c63ff?style=flat-square" alt="LaunchPad TV version">
+  <img src="https://img.shields.io/badge/MiTV_Installer-1.2.1_(41)-f37021?style=flat-square" alt="MiTV Installer version">
   <img src="https://img.shields.io/badge/Android_TV-6.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 6.0+">
   <img src="https://img.shields.io/badge/Languages-8-yellow?style=flat-square" alt="8 languages">
   <img src="https://img.shields.io/badge/Regions-11-informational?style=flat-square" alt="11 regions">
@@ -26,8 +26,8 @@ LaunchPad TV is a clean, fast home screen for Xiaomi Mi Box and Mi TV. Your chan
 
 | App | Runs on | Version | Download |
 |---|---|---|---|
-| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.0<!-- /tv-version --> | <!-- tv-link -->[Releases](../../releases)<!-- /tv-link --> |
-| **MiTV Installer** | Android phone | <!-- installer-version -->1.2.1<!-- /installer-version --> | <!-- installer-link -->[Releases](../../releases)<!-- /installer-link --> |
+| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.0 (120)<!-- /tv-version --> | <!-- tv-link -->[Releases](../../releases)<!-- /tv-link --> |
+| **MiTV Installer** | Android phone | <!-- installer-version -->1.2.1 (41)<!-- /installer-version --> | <!-- installer-link -->[Releases](../../releases)<!-- /installer-link --> |
 
 Android 6.0 or later. Free, and it keeps itself up to date.
 
