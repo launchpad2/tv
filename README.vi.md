@@ -18,6 +18,12 @@
 
 <p align="center">Tiếng Việt · English · Русский · 日本語 · 한국어 · 繁體中文 · Deutsch · Français</p>
 
+<p align="center">
+  <a href="#tải-về"><img alt="Tải APK" src="https://img.shields.io/badge/Tải_APK-2EA043?style=for-the-badge&logo=android&logoColor=white"></a>
+  <a href="docs/content-guide.vi.md"><img alt="Hướng dẫn tạo nội dung" src="https://img.shields.io/badge/Hướng_dẫn_tạo_nội_dung-1F6FEB?style=for-the-badge&logo=readthedocs&logoColor=white"></a>
+  <a href="../../releases"><img alt="Tất cả bản phát hành" src="https://img.shields.io/badge/Tất_cả_bản_phát_hành-6E7681?style=for-the-badge&logo=github&logoColor=white"></a>
+</p>
+
 LaunchPad TV là màn hình chính gọn gàng, mượt mà cho Xiaomi Mi Box và Mi TV. Kênh truyền hình, tin tức trong ngày, thời tiết và ứng dụng của bạn gom về một màn hình, bấm remote là tới.
 
 ![Màn hình chính LaunchPad TV](screenshots/01-home.png)
@@ -53,7 +59,8 @@ Phần lớn màn hình TV được làm ra để bán thứ gì đó cho bạn.
 
 LaunchPad TV dùng được ngay khi cài, và đi xa được như bạn muốn. Chỉ cần một mã 6 ký tự là TV chạy danh sách kênh của bạn, nguồn tin bạn thích hay kho app của riêng bạn. Mười kênh hay mười nghìn kênh, đó là danh sách của bạn.
 
-Muốn tự làm? Xem [hướng dẫn tạo nội dung](docs/content-guide.vi.md).
+> [!TIP]
+> **Tự làm danh sách của bạn.** [Hướng dẫn tạo nội dung](docs/content-guide.vi.md) chỉ cách làm danh sách kênh, nguồn tin hay kho app rồi biến nó thành một mã, kèm file mẫu dùng được ngay.
 
 ## Cài trong vài phút, ngay trên điện thoại
 
@@ -70,5 +77,7 @@ Có tiếng Việt, tiếng Anh và tiếng Nga.
 1. Tải [MiTV Installer](#tải-về) về điện thoại Android.
 2. Để điện thoại và TV chung một mạng Wi-Fi.
 3. Mở app và làm theo từng bước. Vài phút nữa là có màn hình chính mới.
+
+Muốn TV chạy kênh, tin hay kho app của riêng bạn? Làm theo [hướng dẫn tạo nội dung](docs/content-guide.vi.md).
 
 Muốn tự cài? Tải [LaunchPad TV](#tải-về) thẳng về TV rồi cài đặt.

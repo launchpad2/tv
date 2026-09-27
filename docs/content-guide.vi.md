@@ -1,3 +1,5 @@
+<a href="../README.vi.md"><img alt="Quay lại LaunchPad TV" src="https://img.shields.io/badge/←_LaunchPad_TV-6c63ff?style=for-the-badge&logo=android&logoColor=white"></a>
+
 # LaunchPad TV — File nội dung mẫu
 
 File mẫu dùng được ngay cho [LaunchPad TV](https://tv.launchpad2.app). Bạn copy file, thay nội
