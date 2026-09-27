@@ -18,6 +18,8 @@
 
 <p align="center">Tiếng Việt · English · Русский · 日本語 · 한국어 · 繁體中文 · Deutsch · Français</p>
 
+<p align="center"><a href="#tải-về">Tải về</a> · <a href="docs/content-guide.vi.md">Hướng dẫn tạo nội dung</a> · <a href="../../releases">Tất cả bản phát hành</a></p>
+
 LaunchPad TV là màn hình chính gọn gàng, mượt mà cho Xiaomi Mi Box và Mi TV. Kênh truyền hình, tin tức trong ngày, thời tiết và ứng dụng của bạn gom về một màn hình, bấm remote là tới.
 
 ![Màn hình chính LaunchPad TV](screenshots/01-home.png)
@@ -70,5 +72,7 @@ Có tiếng Việt, tiếng Anh và tiếng Nga.
 1. Tải [MiTV Installer](#tải-về) về điện thoại Android.
 2. Để điện thoại và TV chung một mạng Wi-Fi.
 3. Mở app và làm theo từng bước. Vài phút nữa là có màn hình chính mới.
+
+Muốn TV chạy kênh, tin hay kho app của riêng bạn? Làm theo [hướng dẫn tạo nội dung](docs/content-guide.vi.md).
 
 Muốn tự cài? Tải [LaunchPad TV](#tải-về) thẳng về TV rồi cài đặt.

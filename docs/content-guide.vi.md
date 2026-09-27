@@ -1,3 +1,5 @@
+[← LaunchPad TV](../README.vi.md)
+
 # LaunchPad TV — File nội dung mẫu
 
 File mẫu dùng được ngay cho [LaunchPad TV](https://tv.launchpad2.app). Bạn copy file, thay nội

@@ -18,6 +18,8 @@
 
 <p align="center">Tiếng Việt · English · Русский · 日本語 · 한국어 · 繁體中文 · Deutsch · Français</p>
 
+<p align="center"><a href="#download">Download</a> · <a href="docs/content-guide.md">Content guide</a> · <a href="../../releases">All releases</a></p>
+
 LaunchPad TV is a clean, fast home screen for Xiaomi Mi Box and Mi TV. Your channels, the day's news, the weather and your apps come together on one screen, made for the remote.
 
 ![LaunchPad TV home screen](screenshots/01-home.png)
@@ -70,5 +72,7 @@ Available in English, Vietnamese and Russian.
 1. Download [MiTV Installer](#download) to your Android phone.
 2. Put your phone and TV on the same Wi-Fi.
 3. Open the app and follow the steps. Your new home screen is a few minutes away.
+
+Want your own channels, news or app store on the TV? Follow the [content guide](docs/content-guide.md).
 
 Prefer to do it yourself? Download [LaunchPad TV](#download) straight onto your TV and install it.
