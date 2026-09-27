@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: LaunchPad TV
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANIFEST_URL: ${{ secrets.TV_MANIFEST_URL }}
+        run: ./scripts/release.sh tv "$MANIFEST_URL" LaunchPadTV "LaunchPad TV" true
+
+      - name: MiTV Installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MANIFEST_URL: ${{ secrets.INSTALLER_MANIFEST_URL }}
+        run: ./scripts/release.sh installer "$MANIFEST_URL" MiTV-Installer "MiTV Installer" false
+
+      - name: Commit README
+        run: |
+          git config user.name unknown
+          git config user.email unknown@gmail.com
+          git add README.md README.vi.md
+          git diff --cached --quiet && exit 0
+          git commit -m "Update download links"
+          git push
