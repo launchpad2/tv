@@ -26,8 +26,8 @@ LaunchPad TV is a clean, fast home screen for Xiaomi Mi Box and Mi TV. Your chan
 
 | App | Runs on | Version | Download |
 |---|---|---|---|
-| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.0 (120)<!-- /tv-version --> | <!-- tv-link -->[Releases](../../releases)<!-- /tv-link --> |
-| **MiTV Installer** | Android phone | <!-- installer-version -->1.2.1 (41)<!-- /installer-version --> | <!-- installer-link -->[Releases](../../releases)<!-- /installer-link --> |
+| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.0 (120)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.0.0-120.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.0.0-120/LaunchPadTV-2.0.0-120.apk)<!-- /tv-link --> |
+| **MiTV Installer** | Android phone | <!-- installer-version -->1.2.1 (41)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-1.2.1-41.apk](https://github.com/launchpad2/tv/releases/download/installer-v1.2.1-41/MiTV-Installer-1.2.1-41.apk)<!-- /installer-link --> |
 
 Android 6.0 or later. Free, and it keeps itself up to date.
 

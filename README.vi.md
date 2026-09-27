@@ -26,8 +26,8 @@ LaunchPad TV là màn hình chính gọn gàng, mượt mà cho Xiaomi Mi Box v�
 
 | Ứng dụng | Cài trên | Phiên bản | Tải về |
 |---|---|---|---|
-| **LaunchPad TV** | TV box / Smart TV Android | <!-- tv-version -->2.0.0 (120)<!-- /tv-version --> | <!-- tv-link -->[Releases](../../releases)<!-- /tv-link --> |
-| **MiTV Installer** | Điện thoại Android | <!-- installer-version -->1.2.1 (41)<!-- /installer-version --> | <!-- installer-link -->[Releases](../../releases)<!-- /installer-link --> |
+| **LaunchPad TV** | TV box / Smart TV Android | <!-- tv-version -->2.0.0 (120)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.0.0-120.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.0.0-120/LaunchPadTV-2.0.0-120.apk)<!-- /tv-link --> |
+| **MiTV Installer** | Điện thoại Android | <!-- installer-version -->1.2.1 (41)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-1.2.1-41.apk](https://github.com/launchpad2/tv/releases/download/installer-v1.2.1-41/MiTV-Installer-1.2.1-41.apk)<!-- /installer-link --> |
 
 Android 6.0 trở lên. Miễn phí và tự cập nhật.
 
