@@ -1,4 +1,4 @@
-[← LaunchPad TV](../README.vi.md)
+<a href="../README.vi.md"><img alt="Quay lại LaunchPad TV" src="https://img.shields.io/badge/←_LaunchPad_TV-6c63ff?style=for-the-badge&logo=android&logoColor=white"></a>
 
 # LaunchPad TV — File nội dung mẫu
 
