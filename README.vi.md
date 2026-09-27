@@ -1,214 +1,74 @@
-# LaunchPad TV — File nội dung mẫu
+<p align="center">
+  <a href="README.md"><img alt="English" src="https://img.shields.io/badge/EN-English-blue?style=flat-square"></a>
+  <a href="README.vi.md"><img alt="Tiếng Việt" src="https://img.shields.io/badge/VI-Tiếng_Việt-cc6699?style=flat-square"></a>
+</p>
 
-File mẫu dùng được ngay cho [LaunchPad TV](https://tv.launchpad2.app). Bạn copy file, thay nội
-dung của mình vào, đưa lên bất kỳ chỗ nào cho link trực tiếp, rồi đăng ký link đó thành một code
-trên LaunchPad TV.
+<h1 align="center">LaunchPad TV</h1>
 
-Mọi file trong repository này đều là link thật, dùng được ngay.
+<p align="center"><strong>Bật TV lên là mọi thứ bạn cần đã sẵn đó.</strong></p>
 
-English version: [README.md](README.md)
+<p align="center">
+  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.0-6c63ff?style=flat-square" alt="LaunchPad TV version">
+  <img src="https://img.shields.io/badge/MiTV_Installer-1.2.1-f37021?style=flat-square" alt="MiTV Installer version">
+  <img src="https://img.shields.io/badge/Android_TV-6.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 6.0+">
+  <img src="https://img.shields.io/badge/Ngôn_ngữ-8-yellow?style=flat-square" alt="8 languages">
+  <img src="https://img.shields.io/badge/Khu_vực-11-informational?style=flat-square" alt="11 regions">
+  <img src="https://img.shields.io/badge/Giá-Miễn_phí-brightgreen?style=flat-square" alt="Free">
+</p>
 
-## Bắt đầu nhanh
+<p align="center">Tiếng Việt · English · Русский · 日本語 · 한국어 · 繁體中文 · Deutsch · Français</p>
 
-1. Tạo tài khoản tại [tv.launchpad2.app](https://tv.launchpad2.app).
-2. Copy một file mẫu trong repository này rồi sửa lại.
-3. Upload file lên chỗ nào trả về nội dung thô qua HTTPS (xem [Hosting](#hosting-file-của-bạn)).
-4. Vào Dashboard, tạo code, chọn loại, dán link vào.
-5. Nhập code 6 ký tự trên TV.
+LaunchPad TV là màn hình chính gọn gàng, mượt mà cho Xiaomi Mi Box và Mi TV. Kênh truyền hình, tin tức trong ngày, thời tiết và ứng dụng của bạn gom về một màn hình, bấm remote là tới.
 
-## Các file trong repository
+![Màn hình chính LaunchPad TV](screenshots/01-home.png)
 
-| File | Loại code | Là gì |
-|------|-----------|-------|
-| [`store.json`](store.json) | `store` | Manifest cửa hàng ứng dụng — danh sách APK cài được |
-| [`rss.json`](rss.json) | `rss` | Danh sách nguồn tin RSS |
-| [`us.m3u`](us.m3u) | `iptv` | Playlist IPTV định dạng M3U (kênh Mỹ) |
+## Tải về
 
-File APK **không** nằm trong repository. GitHub không cho tải file trong cây repo bằng link trực
-tiếp, nên APK được phát hành dưới dạng release asset:
+| Ứng dụng | Cài trên | Phiên bản | Tải về |
+|---|---|---|---|
+| **LaunchPad TV** | TV box / Smart TV Android | <!-- tv-version -->2.0.0<!-- /tv-version --> | <!-- tv-link -->[Releases](../../releases)<!-- /tv-link --> |
+| **MiTV Installer** | Điện thoại Android | <!-- installer-version -->1.2.1<!-- /installer-version --> | <!-- installer-link -->[Releases](../../releases)<!-- /installer-link --> |
 
-- [`apkpure-3.20.7609.apk`](https://github.com/launchpad2/tv/releases/download/apk-v1/apkpure-3.20.7609.apk)
-- [`aptoide-10.0.0.apk`](https://github.com/launchpad2/tv/releases/download/apk-v1/aptoide-10.0.0.apk)
+Android 6.0 trở lên. Miễn phí và tự cập nhật.
 
-## Dạng link trực tiếp
+## Màn hình chính phục vụ bạn
 
-Dùng đúng hai dạng URL này cho file của bạn.
+Phần lớn màn hình TV được làm ra để bán thứ gì đó cho bạn. LaunchPad TV được làm ra để đưa bạn tới thứ bạn muốn, nhanh hơn.
 
-| Nội dung | Dạng link |
-|----------|-----------|
-| File trong cây repo | `https://raw.githubusercontent.com/<user>/<repo>/main/<file>` |
-| Release asset (APK) | `https://github.com/<user>/<repo>/releases/download/<tag>/<file>` |
+**Mọi thứ trên một màn hình.** Xem tiếp chỗ đang dở, biết ngay hôm nay có gì mới, mở app nào cũng được mà không phải lục menu.
 
-## store.json
+**Xem thứ bạn thích.** Kênh truyền hình nằm ngay trên màn hình chính. Kênh yêu thích và kênh vừa xem chỉ cách một lần bấm.
 
-Code loại store trỏ tới một file JSON liệt kê các app mà TV có thể cài.
+**Nắm tin mỗi ngày.** Đọc trọn bài báo trên màn hình lớn, xem thời tiết trong nháy mắt, cùng giá thị trường và kết quả xổ số bạn vẫn dò hằng ngày.
 
-```json
-{
-  "storeName": "My Store",
-  "apps": [
-    {
-      "name": "APKPure",
-      "packageName": "com.apkpure.aegon",
-      "description": "Cửa hàng ứng dụng thay thế.",
-      "iconUrl": null,
-      "apkUrl": "https://github.com/launchpad2/tv/releases/download/apk-v1/apkpure-3.20.7609.apk",
-      "version": "3.20.7609",
-      "sha256": "3e2d45aaafc2e894c922f6964848ef8410bdfac93470ed9ebc672b6d22218395",
-      "sizeBytes": 26434115,
-      "minSdk": 19,
-      "versionCode": 3207697
-    }
-  ]
-}
-```
+**Theo cách của bạn.** Chỉ hiện thứ bạn dùng, đặt hình nền riêng, chọn màu hợp với phòng khách.
 
-| Trường | Bắt buộc | Ghi chú |
-|--------|----------|---------|
-| `storeName` | có | Tên cửa hàng hiển thị trên TV |
-| `apps[].name` | có | Tên app hiển thị trên TV |
-| `apps[].packageName` | có | Package name Android, dùng để biết app đã cài chưa |
-| `apps[].apkUrl` | có | Link HTTPS trực tiếp tới file `.apk` |
-| `apps[].version` | có | Chuỗi phiên bản hiển thị trong danh sách |
-| `apps[].sha256` | có | SHA-256 của file APK — TV kiểm tra file tải về theo giá trị này |
-| `apps[].sizeBytes` | không | Kích thước file theo byte, dùng cho thanh tiến trình |
-| `apps[].iconUrl` | không | Link PNG/JPG, hoặc `null` để dùng icon tự sinh |
-| `apps[].bannerUrl` | không | Ảnh ngang (16:9) hiện trong khung chi tiết |
-| `apps[].description` | không | Mô tả ngắn |
-| `apps[].minSdk` | không | API level Android tối thiểu của gói. Máy thấp hơn sẽ KHÔNG thấy app |
-| `apps[].versionCode` | không | `versionCode` của gói, dùng để chọn bản mới nhất khi một gói có nhiều bản |
+| | |
+|---|---|
+| ![Truyền hình](screenshots/02-home-tv.png) | ![Đọc tin](screenshots/05-news-reader.png) |
+| ![Thời tiết](screenshots/06-weather.png) | ![Xổ số](screenshots/07-xsmb.png) |
+| ![Ứng dụng](screenshots/08-apps.png) | ![Hình nền](screenshots/11-settings-wallpaper.png) |
 
-Đọc `minSdk` và `versionCode` thẳng từ file APK, đừng gõ tay:
+## Kênh, tin và app của riêng bạn
 
-```bash
-aapt dump badging my-app.apk | grep -E "^package:|^sdkVersion"
-```
+LaunchPad TV dùng được ngay khi cài, và đi xa được như bạn muốn. Chỉ cần một mã 6 ký tự là TV chạy danh sách kênh của bạn, nguồn tin bạn thích hay kho app của riêng bạn. Mười kênh hay mười nghìn kênh, đó là danh sách của bạn.
 
-Bỏ trống cả hai thì giữ nguyên hành vi cũ: app hiện trên mọi TV và không bị gom với bản nào khác.
+Muốn tự làm? Xem [hướng dẫn tạo nội dung](docs/content-guide.vi.md).
 
-### Một app có nhiều bản
+## Cài trong vài phút, ngay trên điện thoại
 
-TV đời cũ và TV đời mới thường cần hai bản khác nhau của cùng một app. Cứ khai mỗi bản thành một
-entry riêng với cùng `packageName`, TV sẽ tự xử lý:
+**MiTV Installer** lo phần thiết lập giúp bạn. Không dây cáp, không máy tính, không cần rành kỹ thuật. Mở app trên điện thoại, kết nối TV qua Wi-Fi rồi làm theo danh sách. App tự cài LaunchPad TV và chuẩn bị TV sẵn sàng.
 
-1. Bỏ mọi bản có `minSdk` cao hơn API của máy — không ai phải tải 90 MB rồi mới nhận thông báo
-   "App not installed".
-2. Hiện **một thẻ cho một gói**: bản còn lại có `versionCode` cao nhất.
-3. Các bản còn lại nằm ở mục **Phiên bản khác** trong khung chi tiết, để người dùng vẫn cài được
-   bản cũ khi bản mới lỗi trên máy của họ.
+Có tiếng Việt, tiếng Anh và tiếng Nga.
 
-Nếu không bản nào qua được bước 1 thì app biến mất khỏi cửa hàng.
+| | |
+|---|---|
+| ![MiTV Installer](screenshots/20-installer-vi.jpg) | ![MiTV Installer tiếng Anh](screenshots/21-installer-en.jpg) |
 
-```json
-{
-  "storeName": "My Store",
-  "apps": [
-    {
-      "name": "LeanKeyboard",
-      "packageName": "org.liskovsoft.androidtv.rukeyboard",
-      "apkUrl": "https://example.com/apk/leankeyboard-6.1.31.apk",
-      "version": "6.1.31",
-      "sha256": "…",
-      "minSdk": 14,
-      "versionCode": 201
-    },
-    {
-      "name": "LeanKeyboard",
-      "packageName": "org.liskovsoft.androidtv.rukeyboard",
-      "apkUrl": "https://example.com/apk/leankeyboard-6.1.28.apk",
-      "version": "6.1.28",
-      "sha256": "…",
-      "minSdk": 14,
-      "versionCode": 198
-    }
-  ]
-}
-```
+## Bắt đầu
 
-Hai app muốn hiện song song thì `packageName` phải KHÁC nhau — đó là lý do `cm.aptoide.pt` và
-`cm.aptoidetv.pt` mỗi cái một thẻ.
+1. Tải [MiTV Installer](#tải-về) về điện thoại Android.
+2. Để điện thoại và TV chung một mạng Wi-Fi.
+3. Mở app và làm theo từng bước. Vài phút nữa là có màn hình chính mới.
 
-Lấy checksum và kích thước file APK:
-
-```bash
-shasum -a 256 my-app.apk
-wc -c < my-app.apk
-```
-
-Giá trị `sha256` phải khớp từng byte. Không khớp thì TV chặn cài — đó chính là cơ chế ngăn file
-bị thay hoặc tải thiếu được cài lên máy.
-
-## rss.json
-
-Code loại rss trỏ tới một file JSON liệt kê các feed. Mỗi feed là một URL RSS hoặc Atom chuẩn.
-
-```json
-{
-  "name": "My News",
-  "feeds": [
-    { "name": "VnExpress", "url": "https://vnexpress.net/rss/tin-moi-nhat.rss" },
-    { "name": "Google News Việt Nam", "url": "https://news.google.com/rss/headlines/section/topic/NATION.vi_vn/Vietnam?hl=vi&gl=VN&ceid=VN:vi" }
-  ]
-}
-```
-
-| Trường | Bắt buộc | Ghi chú |
-|--------|----------|---------|
-| `name` | có | Tên của cả danh sách nguồn tin |
-| `feeds[].name` | có | Nhãn hiển thị trong menu tin tức |
-| `feeds[].url` | có | URL feed RSS hoặc Atom |
-
-Kiểm tra feed trước khi thêm — mở link trên browser, phải thấy XML có thẻ `<item>` hoặc `<entry>`,
-không phải trang HTML.
-
-## Playlist IPTV (.m3u)
-
-Code loại iptv trỏ tới một playlist M3U thuần. Đây đúng là định dạng mọi trình phát IPTV đang
-dùng, nên playlist có sẵn của bạn dùng được luôn, không cần sửa.
-
-```m3u
-#EXTM3U
-#EXTINF:-1 tvg-id="VTV1.vn" tvg-logo="https://example.com/vtv1.png" group-title="VTV",VTV1
-https://example.com/vtv1/index.m3u8
-#EXTINF:-1 tvg-logo="https://example.com/htv7.png" group-title="HTV",HTV7
-https://example.com/htv7/index.m3u8
-```
-
-- `tvg-logo` — logo kênh, không bắt buộc
-- `group-title` — gom kênh thành từng hàng, không bắt buộc
-- Phần chữ sau dấu phẩy là tên kênh hiển thị trên TV
-- Dòng tiếp theo là URL stream — HLS (`.m3u8`) là lựa chọn an toàn nhất
-
-File `us.m3u` trong repository này lấy từ dự án [iptv-org](https://github.com/iptv-org/iptv).
-
-## Hosting file của bạn
-
-Chỗ nào cũng được, miễn là link trả về nội dung thô chứ không phải trang xem trước.
-
-| Nơi lưu | Cách lấy link trực tiếp |
-|---------|-------------------------|
-| GitHub (cách trong repo này) | Commit file, mở file, bấm **Raw**, copy URL |
-| GitHub Releases | Dành cho file nhị phân như APK — upload thành release asset rồi copy link asset |
-| Google Drive | Chia sẻ công khai, rồi dùng `https://drive.google.com/uc?export=download&id=<FILE_ID>` |
-| Dropbox | Chia sẻ file, rồi đổi `dl=0` thành `dl=1` ở cuối link |
-| Server riêng | Cho file chạy qua HTTPS với content type đúng |
-
-Hai thứ cần kiểm tra trước khi dán link vào LaunchPad TV:
-
-- Mở link trên browser thì tải file hoặc thấy nội dung thô, không phải trang HTML.
-- Link mở được ở cửa sổ ẩn danh — link cần đăng nhập sẽ không chạy trên TV.
-
-Link raw của GitHub đi qua CDN nên sửa file có thể mất vài phút mới thấy. Chuyện đó là bình
-thường; TV sẽ nhận nội dung mới ở lần làm mới sau.
-
-## Nội dung mặc định
-
-LaunchPad TV có sẵn code `000000` do chúng tôi quản lý, luôn dùng được:
-
-| Loại | Nội dung |
-|------|----------|
-| `store` | APKPure và Aptoide |
-| `rss` | Nguồn tin tiếng Việt và tiếng Anh |
-| `iptv` | Danh sách kênh Việt Nam và Mỹ |
-
-Dùng code này để kiểm tra TV đã cài đúng chưa, trước khi tự tạo code riêng.
+Muốn tự cài? Tải [LaunchPad TV](#tải-về) thẳng về TV rồi cài đặt.
