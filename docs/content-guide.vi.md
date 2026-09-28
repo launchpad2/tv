@@ -23,7 +23,7 @@ English version: [content-guide.md](content-guide.md)
 | File | Loại code | Là gì |
 |------|-----------|-------|
 | [`store.json`](../store.json) | `store` | Manifest cửa hàng ứng dụng — danh sách APK cài được |
-| [`rss.json`](../rss.json) | `rss` | Danh sách nguồn tin RSS |
+| [`rss.json`](../rss.json) | `rss` | Danh sách nguồn tin RSS (một feed thì dán thẳng link RSS, không cần file) |
 | [`us.m3u`](../us.m3u) | `iptv` | Playlist IPTV định dạng M3U (kênh Mỹ) |
 
 File APK **không** nằm trong repository. GitHub không cho tải file trong cây repo bằng link trực
@@ -142,7 +142,17 @@ bị thay hoặc tải thiếu được cài lên máy.
 
 ## rss.json
 
-Code loại rss trỏ tới một file JSON liệt kê các feed. Mỗi feed là một URL RSS hoặc Atom chuẩn.
+Code loại rss nhận một trong hai dạng link:
+
+1. **Một link RSS hoặc Atom**, dán thẳng vào ô Link. Không cần tạo file gì. Tên nguồn trên TV
+   lấy theo tiêu đề của feed.
+
+   ```
+   https://vnexpress.net/rss/tin-moi-nhat.rss
+   ```
+
+2. **Một file JSON** gom nhiều feed vào cùng một code, như bên dưới. Mỗi feed là một URL RSS hoặc
+   Atom chuẩn.
 
 ```json
 {
