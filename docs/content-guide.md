@@ -23,7 +23,7 @@ Vietnamese version: [content-guide.vi.md](content-guide.vi.md)
 | File | Code type | What it is |
 |------|-----------|------------|
 | [`store.json`](../store.json) | `store` | App store manifest — a list of installable APKs |
-| [`rss.json`](../rss.json) | `rss` | News source list — a list of RSS feeds |
+| [`rss.json`](../rss.json) | `rss` | News source list — a list of RSS feeds (for one feed, paste the RSS link itself, no file needed) |
 | [`us.m3u`](../us.m3u) | `iptv` | IPTV playlist in M3U format (United States channels) |
 
 APK binaries are **not** in the repository tree. GitHub does not serve tree files as downloadable
@@ -143,7 +143,17 @@ that check is what stops a swapped or truncated download from being installed.
 
 ## rss.json
 
-An RSS code points at a JSON list of feeds. Each feed is a standard RSS or Atom URL.
+An RSS code accepts either of two links:
+
+1. **A single RSS or Atom link**, pasted straight into the Link field. No file needed. The TV
+   names the source after the feed's own title.
+
+   ```
+   https://feeds.bbci.co.uk/news/rss.xml
+   ```
+
+2. **A JSON file** that bundles several feeds into one code, as below. Each feed is a standard RSS
+   or Atom URL.
 
 ```json
 {
