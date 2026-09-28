@@ -145,13 +145,14 @@ bị thay hoặc tải thiếu được cài lên máy.
 Code loại rss nhận một trong hai dạng link:
 
 1. **Một link RSS hoặc Atom**, dán thẳng vào ô Link. Không cần tạo file gì. Tên nguồn trên TV
-   lấy theo tiêu đề của feed.
+   là tên hiển thị bạn đặt cho code.
 
    ```
    https://vnexpress.net/rss/tin-moi-nhat.rss
    ```
 
-2. **Một file JSON** gom nhiều feed vào cùng một code, như bên dưới. Mỗi feed là một URL RSS hoặc
+2. **Một file JSON** gom nhiều feed vào cùng một code, như bên dưới. Link file phải có đuôi
+   `.json`, nếu không LaunchPad TV sẽ hiểu nhầm đó là một feed RSS. Mỗi feed là một URL RSS hoặc
    Atom chuẩn.
 
 ```json

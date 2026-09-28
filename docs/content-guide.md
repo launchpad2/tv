@@ -146,14 +146,15 @@ that check is what stops a swapped or truncated download from being installed.
 An RSS code accepts either of two links:
 
 1. **A single RSS or Atom link**, pasted straight into the Link field. No file needed. The TV
-   names the source after the feed's own title.
+   labels the source with the display name you give the code.
 
    ```
    https://feeds.bbci.co.uk/news/rss.xml
    ```
 
-2. **A JSON file** that bundles several feeds into one code, as below. Each feed is a standard RSS
-   or Atom URL.
+2. **A JSON file** that bundles several feeds into one code, as below. The file link must end in
+   `.json`, otherwise LaunchPad TV treats it as a single RSS feed. Each feed is a standard RSS or
+   Atom URL.
 
 ```json
 {
