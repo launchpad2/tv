@@ -24,7 +24,7 @@
   <a href="../../releases"><img alt="All releases" src="https://img.shields.io/badge/All_releases-6E7681?style=for-the-badge&logo=github&logoColor=white"></a>
 </p>
 
-LaunchPad TV is a clean, fast home screen for Xiaomi Mi Box and Mi TV. Your channels, the day's news, the weather and your apps come together on one screen, made for the remote.
+LaunchPad TV is a clean, fast home screen for any Android TV: TV boxes, smart TVs, Mi Box, Mi TV and more. Your channels, the day's news, the weather and your apps come together on one screen, made for the remote.
 
 ![LaunchPad TV home screen](screenshots/01-home.png)
 
