@@ -24,7 +24,7 @@
   <a href="../../releases"><img alt="Tất cả bản phát hành" src="https://img.shields.io/badge/Tất_cả_bản_phát_hành-6E7681?style=for-the-badge&logo=github&logoColor=white"></a>
 </p>
 
-LaunchPad TV là màn hình chính gọn gàng, mượt mà cho Xiaomi Mi Box và Mi TV. Kênh truyền hình, tin tức trong ngày, thời tiết và ứng dụng của bạn gom về một màn hình, bấm remote là tới.
+LaunchPad TV là màn hình chính gọn gàng, mượt mà cho mọi thiết bị Android TV: TV box, Smart TV, Mi Box, Mi TV và nhiều hơn nữa. Kênh truyền hình, tin tức trong ngày, thời tiết và ứng dụng của bạn gom về một màn hình, bấm remote là tới.
 
 ![Màn hình chính LaunchPad TV](screenshots/01-home.png)
 
