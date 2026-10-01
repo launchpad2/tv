@@ -8,8 +8,8 @@
 <p align="center"><strong>Turn on the TV and everything you care about is already there.</strong></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.1_(141)-6c63ff?style=flat-square" alt="LaunchPad TV version">
-  <img src="https://img.shields.io/badge/MiTV_Installer-1.2.1_(44)-f37021?style=flat-square" alt="MiTV Installer version">
+  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.1_(162)-6c63ff?style=flat-square" alt="LaunchPad TV version">
+  <img src="https://img.shields.io/badge/MiTV_Installer-1.3.0_(48)-f37021?style=flat-square" alt="MiTV Installer version">
   <img src="https://img.shields.io/badge/Android_TV-6.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 6.0+">
   <img src="https://img.shields.io/badge/Languages-8-yellow?style=flat-square" alt="8 languages">
   <img src="https://img.shields.io/badge/Regions-11-informational?style=flat-square" alt="11 regions">
@@ -32,8 +32,8 @@ LaunchPad TV is a clean, fast home screen for any Android TV: TV boxes, smart TV
 
 | App | Runs on | Version | Download |
 |---|---|---|---|
-| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.1 (141)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.0.1-141.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.0.1-141/LaunchPadTV-2.0.1-141.apk)<!-- /tv-link --> |
-| **MiTV Installer** | Android phone | <!-- installer-version -->1.2.1 (44)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-1.2.1-44.apk](https://github.com/launchpad2/tv/releases/download/installer-v1.2.1-44/MiTV-Installer-1.2.1-44.apk)<!-- /installer-link --> |
+| **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.0.1 (162)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.0.1-162.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.0.1-162/LaunchPadTV-2.0.1-162.apk)<!-- /tv-link --> |
+| **MiTV Installer** | Android phone | <!-- installer-version -->1.3.0 (48)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-1.3.0-48.apk](https://github.com/launchpad2/tv/releases/download/installer-v1.3.0-48/MiTV-Installer-1.3.0-48.apk)<!-- /installer-link --> |
 
 Android 6.0 or later. Free, and it keeps itself up to date.
 
