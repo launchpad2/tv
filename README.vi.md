@@ -8,8 +8,8 @@
 <p align="center"><strong>Bật TV lên là mọi thứ bạn cần đã sẵn đó.</strong></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/LaunchPad_TV-2.0.1_(165)-6c63ff?style=flat-square" alt="LaunchPad TV version">
-  <img src="https://img.shields.io/badge/MiTV_Installer-1.3.0_(53)-f37021?style=flat-square" alt="MiTV Installer version">
+  <img src="https://img.shields.io/badge/LaunchPad_TV-2.9.6_(174)-6c63ff?style=flat-square" alt="LaunchPad TV version">
+  <img src="https://img.shields.io/badge/MiTV_Installer-2.9.6_(54)-f37021?style=flat-square" alt="MiTV Installer version">
   <img src="https://img.shields.io/badge/Android_TV-6.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 6.0+">
   <img src="https://img.shields.io/badge/Ngôn_ngữ-8-yellow?style=flat-square" alt="8 languages">
   <img src="https://img.shields.io/badge/Khu_vực-11-informational?style=flat-square" alt="11 regions">
@@ -32,8 +32,8 @@ LaunchPad TV là màn hình chính gọn gàng, mượt mà cho mọi thiết b�
 
 | Ứng dụng | Cài trên | Phiên bản | Tải về |
 |---|---|---|---|
-| **LaunchPad TV** | TV box / Smart TV Android | <!-- tv-version -->2.0.1 (165)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.0.1-165.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.0.1-165/LaunchPadTV-2.0.1-165.apk)<!-- /tv-link --> |
-| **MiTV Installer** | Điện thoại Android | <!-- installer-version -->1.3.0 (53)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-1.3.0-53.apk](https://github.com/launchpad2/tv/releases/download/installer-v1.3.0-53/MiTV-Installer-1.3.0-53.apk)<!-- /installer-link --> |
+| **LaunchPad TV** | TV box / Smart TV Android | <!-- tv-version -->2.9.6 (174)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.9.6-174.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.9.6-174/LaunchPadTV-2.9.6-174.apk)<!-- /tv-link --> |
+| **MiTV Installer** | Điện thoại Android | <!-- installer-version -->2.9.6 (54)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-2.9.6-54.apk](https://github.com/launchpad2/tv/releases/download/installer-v2.9.6-54/MiTV-Installer-2.9.6-54.apk)<!-- /installer-link --> |
 
 Android 6.0 trở lên. Miễn phí và tự cập nhật.
 
