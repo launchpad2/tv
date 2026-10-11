@@ -9,7 +9,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/LaunchPad_TV-2.9.6_(176)-6c63ff?style=flat-square" alt="LaunchPad TV version">
-  <img src="https://img.shields.io/badge/MiTV_Installer-2.9.6_(54)-f37021?style=flat-square" alt="MiTV Installer version">
+  <img src="https://img.shields.io/badge/MiTV_Installer-2.9.6_(55)-f37021?style=flat-square" alt="MiTV Installer version">
   <img src="https://img.shields.io/badge/Android_TV-6.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white" alt="Android 6.0+">
   <img src="https://img.shields.io/badge/Languages-8-yellow?style=flat-square" alt="8 languages">
   <img src="https://img.shields.io/badge/Regions-11-informational?style=flat-square" alt="11 regions">
@@ -33,7 +33,7 @@ LaunchPad TV is a clean, fast home screen for any Android TV: TV boxes, smart TV
 | App | Runs on | Version | Download |
 |---|---|---|---|
 | **LaunchPad TV** | Android TV box / Smart TV | <!-- tv-version -->2.9.6 (176)<!-- /tv-version --> | <!-- tv-link -->[LaunchPadTV-2.9.6-176.apk](https://github.com/launchpad2/tv/releases/download/tv-v2.9.6-176/LaunchPadTV-2.9.6-176.apk)<!-- /tv-link --> |
-| **MiTV Installer** | Android phone | <!-- installer-version -->2.9.6 (54)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-2.9.6-54.apk](https://github.com/launchpad2/tv/releases/download/installer-v2.9.6-54/MiTV-Installer-2.9.6-54.apk)<!-- /installer-link --> |
+| **MiTV Installer** | Android phone | <!-- installer-version -->2.9.6 (55)<!-- /installer-version --> | <!-- installer-link -->[MiTV-Installer-2.9.6-55.apk](https://github.com/launchpad2/tv/releases/download/installer-v2.9.6-55/MiTV-Installer-2.9.6-55.apk)<!-- /installer-link --> |
 
 Android 6.0 or later. Free, and it keeps itself up to date.
 
